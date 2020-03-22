@@ -100,6 +100,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="8bC-Xf-vdC" id="Pml-Ul-gH5"/>
+                        <outlet property="cityNameLabel" destination="nXA-cy-JWU" id="hQD-97-NVj"/>
+                        <outlet property="conditionImageView" destination="GAG-BW-wIx" id="G6v-Zf-zVC"/>
+                        <outlet property="conditionLabel" destination="qyy-SG-jYi" id="cqm-z8-LGv"/>
+                        <outlet property="dateLabel" destination="xRr-gX-yGh" id="48d-kF-zSo"/>
+                        <outlet property="temperatureLabel" destination="Wsy-bs-brC" id="cOR-f0-CTo"/>
+                        <outlet property="temperatureView" destination="pBI-Tk-ICP" id="al8-1t-zaE"/>
+                        <outlet property="unitLabel" destination="KTJ-dA-pgC" id="se8-Cq-03f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
