@@ -5,10 +5,6 @@
 //  Created by Yury Radetsky on 20.04.2020.
 //  Copyright © 2020 YuryRadetsky. All rights reserved.
 //
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let weatherStruct = try? newJSONDecoder().decode(WeatherStruct.self, from: jsonData)
 
 import Foundation
 
@@ -74,6 +70,6 @@ struct Weather: Codable {
 
 // MARK: - Wind
 struct Wind: Codable {
-    let speed, deg, gust: Int
+    let speed, deg: Int
 }
 

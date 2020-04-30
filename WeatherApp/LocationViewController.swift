@@ -13,9 +13,6 @@ class LocationViewController: UIViewController {
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
     
-    //Constants
-    let weatherUrl = "http://api.openweathermap.org/data/2.5/weather"
-    let apiId = "da2798e7e8c96956caff9ac80cce3ebe"
     
     
     @IBOutlet weak var cityNameLabel: UILabel!
@@ -36,19 +33,20 @@ class LocationViewController: UIViewController {
         
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         
-        networkService.request(urlString: urlString) { (result) in
+        // чтобы избежать утечки памяти, нужно добавить [weak self]
+        networkService.request(urlString: urlString) { [weak self] (result) in
             switch result {
                 
             case .success(let weaatherStruct):
-                self.weatherStruct = weaatherStruct
+                self?.weatherStruct = weaatherStruct
                 
                 // UI Updates
-                self.cityNameLabel.text = weaatherStruct.name
-                self.feelLikeLabel.text = "feels like \(weaatherStruct.main.feelsLike) ℃"
-                self.temperatureLabel.text = "\(weaatherStruct.main.temp)"
+                self?.cityNameLabel.text = weaatherStruct.name
+                self?.feelLikeLabel.text = "feels like \(weaatherStruct.main.feelsLike) ℃"
+                self?.temperatureLabel.text = "\(weaatherStruct.main.temp)"
                 for weather in weaatherStruct.weather {
                     //localizedUppercase - получаем стрингу капсом 
-                    self.conditionLabel.text = weather.main.localizedUppercase
+                    self?.conditionLabel.text = weather.main.localizedUppercase
                 }
                 
             case .failure(let error):

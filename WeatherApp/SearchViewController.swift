@@ -32,35 +32,14 @@ class SearchViewController: UIViewController {
         //Gradient background
         setupGradient()
         
-        //        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&appid=da2798e7e8c96956caff9ac80cce3ebe"
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         
-        networkService.request(urlString: urlString) { (result) in
-            switch result {
-            case .success(let weatherStruct):
-                print(weatherStruct.base.count, weatherStruct)
-                self.weatherStruct = weatherStruct
-                
-                // UI Updates
-                self.cityNameLabel.text = weatherStruct.name
-                self.feelLikeLabel.text = "feels like \(weatherStruct.main.feelsLike) ℃"
-                self.temperatureLabel.text = "\(weatherStruct.main.temp)"
-                for weather in weatherStruct.weather {
-                    //localizedUppercase - получаем стрингу капсом
-                    self.conditionLabel.text = weather.main.localizedUppercase
-                }
-                
-            case .failure(let error):
-                print("error", error)
-            }
-        }
+     
         
     }
     
     
     //Gradient background
     func setupGradient() {
-        //Gradient background
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds
         gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor, UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
@@ -73,5 +52,27 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //выводим в консоль вводимый текст( не будет показываться, пока не установим делегата)
         print(searchText)
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(searchText)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+        
+             // чтобы избежать утечки памяти, нужно добавить [weak self]
+             networkService.request(urlString: urlString) { [weak self] (result) in
+                 switch result {
+                 case .success(let weatherStruct):
+                     print(weatherStruct.base.count, weatherStruct)
+                     self?.weatherStruct = weatherStruct
+                     
+                     // UI Updates
+                     self?.cityNameLabel.text = weatherStruct.name
+                     self?.feelLikeLabel.text = "feels like \(weatherStruct.main.feelsLike) ℃"
+                     self?.temperatureLabel.text = "\(weatherStruct.main.temp)"
+                     for weather in weatherStruct.weather {
+                         //localizedUppercase - получаем стрингу капсом
+                        self?.conditionLabel.text = weather.main.localizedUppercase
+                     }
+                     
+                 case .failure(let error):
+                     print("error", error)
+                 }
+             }
     }
 }
