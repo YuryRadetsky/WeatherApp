@@ -46,8 +46,38 @@ class SearchViewController: UIViewController {
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    func weatherCondition(weatherId: Int) {
+           let id = weatherId
+           switch id {
+           case 200...232:
+               conditionImageView.image = UIImage(named: "icon_rain")
+               print("Thunderstorm")
+           case 300...321:
+               conditionImageView.image = UIImage(named: "icon_rain")
+               print("Drizzle")
+           case 500...531:
+               conditionImageView.image = UIImage(named: "icon_rain")
+               print("Rain")
+           case 600...622:
+               conditionImageView.image = UIImage(named: "icon_snow")
+               print("Snow")
+           case 701...781:
+               conditionImageView.image = UIImage(named: "icon_fog")
+               print("Atmosphere")
+           case 800:
+               conditionImageView.image = UIImage(named: "icon_sun")
+               print("Clear")
+           case 801...804:
+               conditionImageView.image = UIImage(named: "icon_fog")
+               print("Clouds")
+           default:
+               conditionImageView.image = UIImage(named: "icon_na")
+               print("")
+           }
+       }
     
 }
+
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //выводим в консоль вводимый текст( не будет показываться, пока не установим делегата)
@@ -68,6 +98,7 @@ extension SearchViewController: UISearchBarDelegate {
                      for weather in weatherStruct.weather {
                          //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase
+                        self?.weatherCondition(weatherId: weather.id)
                      }
                      
                  case .failure(let error):
