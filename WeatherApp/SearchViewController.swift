@@ -29,11 +29,15 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cityNameLabel.text = "City"
+        feelLikeLabel.text = "feels like -- ℃"
+        conditionImageView.image = UIImage(named: "icon_na")
+        temperatureLabel.text = "--"
+        conditionLabel.text = "condition"
+        
         //Gradient background
         setupGradient()
-        
-        
-     
         
     }
     
