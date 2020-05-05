@@ -84,7 +84,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //выводим в консоль вводимый текст( не будет показываться, пока не установим делегата)
+        //выводим в консоль вводимый текст(не будет показываться, пока не установим делегата)
         print(searchText)
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(searchText)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         
