@@ -16,6 +16,8 @@
 		567C846924267FDD00D4A8CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 567C846724267FDD00D4A8CC /* Main.storyboard */; };
 		567C846B24267FDE00D4A8CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 567C846A24267FDE00D4A8CC /* Assets.xcassets */; };
 		567C846E24267FDF00D4A8CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 567C846C24267FDF00D4A8CC /* LaunchScreen.storyboard */; };
+		56B9904F246332FA0002F5D9 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B9904E246332FA0002F5D9 /* Gradient.swift */; };
+		56B990512463374A0002F5D9 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B990502463374A0002F5D9 /* Image.swift */; };
 		56DB0983244E0FD7004AECD2 /* WeatherStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DB0982244E0FD7004AECD2 /* WeatherStruct.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,8 @@
 		567C846A24267FDE00D4A8CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		567C846D24267FDF00D4A8CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		567C846F24267FDF00D4A8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56B9904E246332FA0002F5D9 /* Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
+		56B990502463374A0002F5D9 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		56DB0982244E0FD7004AECD2 /* WeatherStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +90,8 @@
 				567C846724267FDD00D4A8CC /* Main.storyboard */,
 				567C846524267FDD00D4A8CC /* LocationViewController.swift */,
 				5643263424548CDF0011A044 /* SearchViewController.swift */,
+				56B990502463374A0002F5D9 /* Image.swift */,
+				56B9904E246332FA0002F5D9 /* Gradient.swift */,
 				5643263C2454D2F40011A044 /* Models */,
 				5643263D2454D3120011A044 /* Networking */,
 				567C846A24267FDE00D4A8CC /* Assets.xcassets */,
@@ -167,12 +173,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5643263524548CDF0011A044 /* SearchViewController.swift in Sources */,
+				56B990512463374A0002F5D9 /* Image.swift in Sources */,
 				567C846624267FDD00D4A8CC /* LocationViewController.swift in Sources */,
 				5643263B2454C9960011A044 /* NetworkService.swift in Sources */,
 				566839F3245B7233009488AA /* NetworkManager.swift in Sources */,
 				56DB0983244E0FD7004AECD2 /* WeatherStruct.swift in Sources */,
 				567C846224267FDD00D4A8CC /* AppDelegate.swift in Sources */,
 				567C846424267FDD00D4A8CC /* SceneDelegate.swift in Sources */,
+				56B9904F246332FA0002F5D9 /* Gradient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

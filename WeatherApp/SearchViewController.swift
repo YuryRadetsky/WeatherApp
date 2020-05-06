@@ -13,6 +13,9 @@ class SearchViewController: UIViewController {
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
     
+    var gradient = Gradient()
+    var image = Image()
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -34,11 +37,10 @@ class SearchViewController: UIViewController {
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
-        conditionLabel.text = "condition"
+        conditionLabel.text = "CONDITION"
         
         //Gradient background
         setupGradient()
-        
     }
     
     
@@ -46,39 +48,11 @@ class SearchViewController: UIViewController {
     func setupGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds
-        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor, UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
+                                UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
         self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func weatherCondition(weatherId: Int) {
-           let id = weatherId
-           switch id {
-           case 200...232:
-               conditionImageView.image = UIImage(named: "icon_rain")
-               print("Thunderstorm")
-           case 300...321:
-               conditionImageView.image = UIImage(named: "icon_rain")
-               print("Drizzle")
-           case 500...531:
-               conditionImageView.image = UIImage(named: "icon_rain")
-               print("Rain")
-           case 600...622:
-               conditionImageView.image = UIImage(named: "icon_snow")
-               print("Snow")
-           case 701...781:
-               conditionImageView.image = UIImage(named: "icon_fog")
-               print("Atmosphere")
-           case 800:
-               conditionImageView.image = UIImage(named: "icon_sun")
-               print("Clear")
-           case 801...804:
-               conditionImageView.image = UIImage(named: "icon_fog")
-               print("Clouds")
-           default:
-               conditionImageView.image = UIImage(named: "icon_na")
-               print("")
-           }
-       }
     
 }
 
@@ -102,7 +76,8 @@ extension SearchViewController: UISearchBarDelegate {
                      for weather in weatherStruct.weather {
                          //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase
-                        self?.weatherCondition(weatherId: weather.id)
+                        // conditionImage
+                        self?.image.weatherCondition(weatherId: weather.id, conditionImageView: (self?.conditionImageView)!)
                      }
                      
                  case .failure(let error):
