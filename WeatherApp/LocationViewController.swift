@@ -13,10 +13,9 @@ class LocationViewController: UIViewController {
     
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
+    
     var gradient = Gradient()
     var image = Image()
-    
-    
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
@@ -39,6 +38,7 @@ class LocationViewController: UIViewController {
         // чтобы избежать утечки памяти, нужно добавить [weak self]
         networkService.request(urlString: urlString) { [weak self] (result) in
             switch result {
+                
             // в случае успеха выполняются следующие действие:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
@@ -52,16 +52,12 @@ class LocationViewController: UIViewController {
                 for weather in weaatherStruct.weather {
                     //localizedUppercase - получаем стрингу капсом 
                     self?.conditionLabel.text = weather.main.localizedUppercase
-                    //                    self?.conditionLabel.text = weather.weatherDescription
                     print(weather.id)
-//                    self?.weatherCondition(weatherId: weather.id)
-                    self?.image.weatherCondition(weatherId: weather.id, conditionImageView: (self?.conditionImageView)!)
-                    
+                    // Image Updates
+                    self?.image.weatherCondition(weatherId: weather.id)
+                    // Gradient background Updates //
+                    self?.gradient.setupBackgroundColor(weatherId: weather.id)
                 }
-                
-                // Gradient background Updates //
-//                self?.setupBackgroundColor(temperature: weaatherStruct.main.temp)
-                self?.gradient.setupBackgroundColor(temperature: weaatherStruct.main.temp, viewController: self! )
                 
                 
             // в случае провала выполняются следующие действие:

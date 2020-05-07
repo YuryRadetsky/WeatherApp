@@ -77,7 +77,7 @@ extension SearchViewController: UISearchBarDelegate {
                          //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase
                         // conditionImage
-                        self?.image.weatherCondition(weatherId: weather.id, conditionImageView: (self?.conditionImageView)!)
+                        self?.image.weatherCondition(weatherId: weather.id)
                      }
                      
                  case .failure(let error):
