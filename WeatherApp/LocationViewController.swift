@@ -11,6 +11,8 @@ import CoreLocation
 
 class LocationViewController: UIViewController {
     
+    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+    
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
     
@@ -30,16 +32,12 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Gradient background
-        //        setupGradient ()
-        
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         
         // чтобы избежать утечки памяти, нужно добавить [weak self]
         networkService.request(urlString: urlString) { [weak self] (result) in
             switch result {
                 
-            // в случае успеха выполняются следующие действие:
+            // в случае успеха выполняются действия:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
                 self?.weatherStruct = weaatherStruct
@@ -55,28 +53,16 @@ class LocationViewController: UIViewController {
                     print(weather.id)
                     // Image Updates
                     self?.image.weatherCondition(weatherId: weather.id)
-                    // Gradient background Updates //
+                    // Gradient background Updates
                     self?.gradient.setupBackgroundColor(weatherId: weather.id)
                 }
                 
-                
-            // в случае провала выполняются следующие действие:
+            // в случае провала выполняются действия:
             case .failure(let error):
                 print("error", error)
             }
         }
     }
-    
-    //Gradient background
-    func setupGradient() {
-        //Gradient background
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.view.bounds
-        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
     
 }
 
