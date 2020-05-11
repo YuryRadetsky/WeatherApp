@@ -10,8 +10,7 @@ import UIKit
 
 class Image {
 
-    func weatherCondition(weatherId: Int) {
-        let imageView = UIImageView()
+    func weatherCondition(weatherId: Int, imageView: UIImageView) {
         
         let id = weatherId
         switch id {

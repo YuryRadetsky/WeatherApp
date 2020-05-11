@@ -13,8 +13,8 @@ class SearchViewController: UIViewController {
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
     
-    var gradient = Gradient()
-    var image = Image()
+    let gradient = Gradient()
+    let image = Image()
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
@@ -39,20 +39,17 @@ class SearchViewController: UIViewController {
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
         
-        //Gradient background
-        setupGradient()
     }
     
     
     //Gradient background
-    func setupGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.view.bounds
-        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
+//    func setupGradient() {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.view.bounds
+//        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
+//                                UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+//        self.view.layer.insertSublayer(gradientLayer, at: 0)
+//    }
     
 }
 
@@ -77,7 +74,10 @@ extension SearchViewController: UISearchBarDelegate {
                          //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase
                         // conditionImage
-                        self?.image.weatherCondition(weatherId: weather.id)
+                        self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
+                        // Gradient background Updates
+                        self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
+                        
                      }
                      
                  case .failure(let error):

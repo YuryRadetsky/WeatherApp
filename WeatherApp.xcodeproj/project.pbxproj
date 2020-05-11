@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5621257824670913007B7459 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5621257724670913007B7459 /* CoreLocation.framework */; };
 		5643263524548CDF0011A044 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5643263424548CDF0011A044 /* SearchViewController.swift */; };
 		5643263B2454C9960011A044 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5643263A2454C9960011A044 /* NetworkService.swift */; };
 		566839F3245B7233009488AA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566839F2245B7233009488AA /* NetworkManager.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5621257724670913007B7459 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5643263424548CDF0011A044 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5643263A2454C9960011A044 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		566839F2245B7233009488AA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -43,12 +45,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5621257824670913007B7459 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		560F91792469DD10004B4B91 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				567C846524267FDD00D4A8CC /* LocationViewController.swift */,
+				5643263424548CDF0011A044 /* SearchViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		5621257624670913007B7459 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5621257724670913007B7459 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5643263C2454D2F40011A044 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +91,7 @@
 			children = (
 				567C846024267FDD00D4A8CC /* WeatherApp */,
 				567C845F24267FDD00D4A8CC /* Products */,
+				5621257624670913007B7459 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,10 +109,9 @@
 				567C846124267FDD00D4A8CC /* AppDelegate.swift */,
 				567C846324267FDD00D4A8CC /* SceneDelegate.swift */,
 				567C846724267FDD00D4A8CC /* Main.storyboard */,
-				567C846524267FDD00D4A8CC /* LocationViewController.swift */,
-				5643263424548CDF0011A044 /* SearchViewController.swift */,
 				56B990502463374A0002F5D9 /* Image.swift */,
 				56B9904E246332FA0002F5D9 /* Gradient.swift */,
+				560F91792469DD10004B4B91 /* Controllers */,
 				5643263C2454D2F40011A044 /* Models */,
 				5643263D2454D3120011A044 /* Networking */,
 				567C846A24267FDE00D4A8CC /* Assets.xcassets */,

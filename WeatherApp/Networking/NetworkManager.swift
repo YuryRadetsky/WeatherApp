@@ -10,9 +10,11 @@ import UIKit
 import CoreLocation
 
 struct NetworkManager {
+    let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=da2798e7e8c96956caff9ac80cce3ebe&units=metric"
+    var weatherStruct: WeatherStruct? = nil
+    let networkService = NetworkService()
     
-//    func fetchUrlString(latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> String {
-//        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=da2798e7e8c96956caff9ac80cce3ebe"
-//        return url
-//    }
+    
+
+    
 }
