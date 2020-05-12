@@ -11,10 +11,7 @@ import CoreLocation
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
-    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
-    
-    var latitude = Double()
-    var longitude = Double()
+//    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
     
     let locationManager = CLLocationManager()
     let networkService = NetworkService()
@@ -46,7 +43,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     func setupRequest() {
         // чтобы избежать утечки памяти, нужно добавить [weak self]
-        networkService.request(urlString: urlString) { [weak self] (result) in
+        networkService.request(city: "Minsk") { [weak self] (result) in
             switch result {
             // в случае успеха выполняются следующие действие:
             case .success(let weaatherStruct):
@@ -54,7 +51,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                 self?.weatherStruct = weaatherStruct
                 // UI Updates
                 self?.cityNameLabel.text = weaatherStruct.name
-                self?.feelLikeLabel.text = "feels like \(weaatherStruct.main.feelsLike) ℃"
+                self?.feelLikeLabel.text = "feels like \(Int(weaatherStruct.main.feelsLike)) ℃"
                 self?.temperatureLabel.text = "\(weaatherStruct.main.temp)"
                 
                 for weather in weaatherStruct.weather {
@@ -94,21 +91,21 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         //получаем текущие координаты устройства
         if let location = locations.last {
             print(location)
-            latitude = location.coordinate.latitude
-            longitude = location.coordinate.longitude
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
             print(latitude,longitude)
             
+            let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+            print(apiUrl)
             
         }
         
-        let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
-        print(apiUrl)
                 
         //stopUpdatingLocation() остановливаем обновление локации
         locationManager.stopUpdatingLocation()
     }
     
-    //Сообщает делегату, что администратору местоположения не удалось получить значение местоположения.
+    //Сообщает делегату, что locationManager не получил значение местоположения.
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Can't get location",error)
     }
