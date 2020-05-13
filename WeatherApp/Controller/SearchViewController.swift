@@ -19,6 +19,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
+    @IBOutlet weak var minMaxTempLabel: UILabel!
     
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
@@ -38,6 +39,7 @@ class SearchViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
+        minMaxTempLabel.text = "--˚ / --˚"
         
     }
     
@@ -69,6 +71,7 @@ extension SearchViewController: UISearchBarDelegate {
                      // UI Updates
                      self?.cityNameLabel.text = weatherStruct.name
                      self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
+                     self?.minMaxTempLabel.text = "\(weatherStruct.main.tempMin)˚/ \(weatherStruct.main.tempMax)˚"
                      self?.temperatureLabel.text = "\(weatherStruct.main.temp)"
                      for weather in weatherStruct.weather {
                          //localizedUppercase - получаем стрингу капсом

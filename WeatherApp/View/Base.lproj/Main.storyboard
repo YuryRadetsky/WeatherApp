@@ -85,11 +85,24 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NGN-kV-Gze" userLabel="Min/Max Stack View">
+                                <rect key="frame" x="311" y="188" width="82.5" height="17"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18 ℃ / 21 ℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbs-qf-mRK" userLabel="Min/Max Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.40534752610000002" green="0.32746022940000002" blue="0.89416438340000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Ttq-ZH-bht" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="71" id="6Co-eh-Nn7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qbs-qf-mRK" secondAttribute="trailing" constant="20" id="BJM-d6-f2R"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ttq-ZH-bht" secondAttribute="trailing" constant="20" id="EDU-GG-Qoy"/>
+                            <constraint firstItem="qbs-qf-mRK" firstAttribute="top" secondItem="GAG-BW-wIx" secondAttribute="bottom" constant="20" id="EXV-6G-Pf5"/>
                             <constraint firstItem="Ttq-ZH-bht" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JXu-nh-wlF"/>
                             <constraint firstItem="fXi-ai-oBR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="RhF-D9-155"/>
                             <constraint firstItem="Ttq-ZH-bht" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="SU4-Tk-fwT"/>
@@ -105,6 +118,7 @@
                         <outlet property="conditionImageView" destination="GAG-BW-wIx" id="G6v-Zf-zVC"/>
                         <outlet property="conditionLabel" destination="qyy-SG-jYi" id="cqm-z8-LGv"/>
                         <outlet property="feelLikeLabel" destination="xRr-gX-yGh" id="48d-kF-zSo"/>
+                        <outlet property="minMaxTempLabel" destination="qbs-qf-mRK" id="wpU-JQ-xoh"/>
                         <outlet property="temperatureLabel" destination="Wsy-bs-brC" id="cOR-f0-CTo"/>
                         <outlet property="unitLabel" destination="KTJ-dA-pgC" id="se8-Cq-03f"/>
                     </connections>
@@ -203,6 +217,17 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xrz-Tr-TGb" userLabel="Min/Max Stack View">
+                                <rect key="frame" x="311.5" y="185" width="82.5" height="17"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18 ℃ / 21 ℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zuk-22-fX1" userLabel="Min/Max Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.40534752610000002" green="0.32746022940000002" blue="0.89416438340000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -212,6 +237,8 @@
                             <constraint firstItem="K8a-mS-vJH" firstAttribute="top" secondItem="NzY-F4-BtE" secondAttribute="top" constant="71" id="ZYU-ud-z3C"/>
                             <constraint firstItem="K8a-mS-vJH" firstAttribute="leading" secondItem="NzY-F4-BtE" secondAttribute="leading" constant="20" id="pcS-dT-UBa"/>
                             <constraint firstItem="XvN-Da-rNo" firstAttribute="centerX" secondItem="NzY-F4-BtE" secondAttribute="centerX" id="s9g-9n-67i"/>
+                            <constraint firstItem="NzY-F4-BtE" firstAttribute="trailing" secondItem="Xrz-Tr-TGb" secondAttribute="trailing" constant="20" id="yBB-fA-uIT"/>
+                            <constraint firstItem="Xrz-Tr-TGb" firstAttribute="top" secondItem="bgj-UI-2tk" secondAttribute="bottom" constant="20" id="yi1-vY-RuV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NzY-F4-BtE"/>
                     </view>
@@ -223,6 +250,7 @@
                         <outlet property="conditionImageView" destination="bgj-UI-2tk" id="ku3-zg-5Wc"/>
                         <outlet property="conditionLabel" destination="9Vw-5X-AeM" id="qVd-3Y-0LU"/>
                         <outlet property="feelLikeLabel" destination="SAk-dH-73m" id="cZV-VP-0Kp"/>
+                        <outlet property="minMaxTempLabel" destination="Zuk-22-fX1" id="V8o-VD-JUO"/>
                         <outlet property="searchBarr" destination="nnU-0n-WGa" id="s6F-XX-dxu"/>
                         <outlet property="temperatureLabel" destination="ddB-Fj-V0K" id="3sh-x0-jKF"/>
                         <outlet property="unitLabel" destination="Phe-wy-iS3" id="d3D-ue-2uS"/>

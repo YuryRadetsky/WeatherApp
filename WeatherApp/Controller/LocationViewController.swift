@@ -11,7 +11,7 @@ import CoreLocation
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
-//    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+    //    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
     
     let locationManager = CLLocationManager()
     let networkService = NetworkService()
@@ -23,6 +23,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
+    @IBOutlet weak var minMaxTempLabel: UILabel!
     
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
@@ -35,7 +36,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         setupLocationManager()
-        setupRequest()
+                setupRequest()
         
     }
     
@@ -52,6 +53,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                 // UI Updates
                 self?.cityNameLabel.text = weaatherStruct.name
                 self?.feelLikeLabel.text = "feels like \(Int(weaatherStruct.main.feelsLike)) ℃"
+                self?.minMaxTempLabel.text = "\(weaatherStruct.main.tempMin)˚/ \(weaatherStruct.main.tempMax)˚"
                 self?.temperatureLabel.text = "\(weaatherStruct.main.temp)"
                 
                 for weather in weaatherStruct.weather {
@@ -95,12 +97,40 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             let longitude = location.coordinate.longitude
             print(latitude,longitude)
             
-            let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
-            print(apiUrl)
+//            let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+//            print(apiUrl)
+            
+            networkService.request(latitude: latitude, longitude: longitude) { [weak self] (result) in
+                switch result {
+                // в случае успеха выполняются следующие действие:
+                case .success(let weaatherStruct):
+                    print(weaatherStruct.base.count)
+                    self?.weatherStruct = weaatherStruct
+                    // UI Updates
+                    self?.cityNameLabel.text = weaatherStruct.name
+                    self?.feelLikeLabel.text = "feels like \(Int(weaatherStruct.main.feelsLike)) ℃"
+                    self?.minMaxTempLabel.text = "\(weaatherStruct.main.tempMin)˚/ \(weaatherStruct.main.tempMax)˚"
+                    self?.temperatureLabel.text = "\(weaatherStruct.main.temp)"
+                    
+                    for weather in weaatherStruct.weather {
+                        //localizedUppercase - получаем стрингу капсом
+                        self?.conditionLabel.text = weather.main.localizedUppercase
+                        print(weather.id)
+                        // Image Updates
+                        self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
+                        // Gradient background Updates //
+                        self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
+                    }
+                    
+                // в случае провала выполняются следующие действие:
+                case .failure(let error):
+                    print("error", error)
+                }
+            }
             
         }
         
-                
+        
         //stopUpdatingLocation() остановливаем обновление локации
         locationManager.stopUpdatingLocation()
     }
