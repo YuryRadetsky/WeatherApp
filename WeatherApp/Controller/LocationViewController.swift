@@ -36,7 +36,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         setupLocationManager()
-                setupRequest()
+//                setupRequest()
         
     }
     
@@ -46,7 +46,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         // чтобы избежать утечки памяти, нужно добавить [weak self]
         networkService.request(city: "Minsk") { [weak self] (result) in
             switch result {
-            // в случае успеха выполняются следующие действие:
+            // в случае успеха выполняется действие:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
                 self?.weatherStruct = weaatherStruct
@@ -66,7 +66,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                     self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
                 }
                 
-            // в случае провала выполняются следующие действие:
+            // в случае провала выполняется действие:
             case .failure(let error):
                 print("error", error)
             }
@@ -79,7 +79,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         // requestWhenInUseAuthorization() Запрашивает у пользователя разрешение на использование служб определения местоположения во время использования приложения.
         locationManager.requestWhenInUseAuthorization()
-        //startUpdatingLocation() вызов этого метода заставляет менеджер местоположения получить начальное исправление местоположения
+        //startUpdatingLocation() вызов этого метода заставляет locationManager получить начальное местоположения
         locationManager.startUpdatingLocation()
     }
     
@@ -89,7 +89,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     //Сообщает делегату, что доступны новые данные о местоположении.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //        print(manager.location)
+//                print(manager.location)
         //получаем текущие координаты устройства
         if let location = locations.last {
             print(location)
@@ -97,12 +97,12 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             let longitude = location.coordinate.longitude
             print(latitude,longitude)
             
-//            let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
-//            print(apiUrl)
+            //            let apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+            //            print(apiUrl)
             
             networkService.request(latitude: latitude, longitude: longitude) { [weak self] (result) in
                 switch result {
-                // в случае успеха выполняются следующие действие:
+                // в случае успеха выполняется действие:
                 case .success(let weaatherStruct):
                     print(weaatherStruct.base.count)
                     self?.weatherStruct = weaatherStruct
@@ -122,7 +122,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                         self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
                     }
                     
-                // в случае провала выполняются следующие действие:
+                // в случае провала выполняется действие:
                 case .failure(let error):
                     print("error", error)
                 }
@@ -131,7 +131,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         
-        //stopUpdatingLocation() остановливаем обновление локации
+        //stopUpdatingLocation() останавливаем обновление локации
         locationManager.stopUpdatingLocation()
     }
     

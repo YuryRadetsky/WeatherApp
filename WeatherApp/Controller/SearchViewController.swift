@@ -44,15 +44,6 @@ class SearchViewController: UIViewController {
     }
     
     
-    //Gradient background
-//    func setupGradient() {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = self.view.bounds
-//        gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-//                                UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
-//        self.view.layer.insertSublayer(gradientLayer, at: 0)
-//    }
-    
 }
 
 extension SearchViewController: UISearchBarDelegate {
