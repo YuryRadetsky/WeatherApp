@@ -50,7 +50,6 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //выводим в консоль вводимый текст(не будет показываться, пока не установим делегата)
         print(searchText)
-//        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(searchText)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         
              // чтобы избежать утечки памяти, нужно добавить [weak self]
              networkService.request(city: searchText) { [weak self] (result) in
@@ -62,8 +61,8 @@ extension SearchViewController: UISearchBarDelegate {
                      // UI Updates
                      self?.cityNameLabel.text = weatherStruct.name
                      self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
-                     self?.minMaxTempLabel.text = "\(weatherStruct.main.tempMin)˚/ \(weatherStruct.main.tempMax)˚"
-                     self?.temperatureLabel.text = "\(weatherStruct.main.temp)"
+                     self?.minMaxTempLabel.text = "\(Int(weatherStruct.main.tempMin))˚/ \(Int(weatherStruct.main.tempMax))˚"
+                     self?.temperatureLabel.text = "\(Int(weatherStruct.main.temp))"
                      for weather in weatherStruct.weather {
                          //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase

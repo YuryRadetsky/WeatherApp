@@ -14,43 +14,35 @@ class NetworkService {
     
     /*
      C 5 версии swift вышел спечиальный тип Result и мы можем писать не func request (urlString: String, completion: @escaping (WeatherStruct?, Error?) -> Void).
-     Result принимает в себя два объекта (два дженерика), где первый отвечает за тот тип, который мы получили, а второй за ошибку.
+     Result принимает в себя два объекта (два дженерика). Первый объект отвечает за тот тип, который мы получили, второй объект отвечает за ошибку.
      Для того, чтобы completion возвращал значения из вне, нам нужно написать ключевое слово @escaping.
      */
     func request (city: String, completion: @escaping (Result<WeatherStruct, Error>) -> Void){
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+        print("URL string: city - ",urlString)
         
         guard let url = URL(string: urlString) else {return}
         
-        // при помощи класса URLSession мы запрашиваем наши данные. На вход подаем наш url, а на выходе получаемcompletionHandler, который передает дату, которую мы получи, + респонс и ошибку
+        /*
+         при помощи класса URLSession мы запрашиваем наши данные. На вход подаем наш url, а на выходе получаем completionHandler,
+         который передает дату, которую мы получи, + респонс и ошибку
+         */
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             // ниже мы указываем, что будем делать с датой, которая к нам приходит
-            
-            //мы не можем перекрывать основной поток. Подгрузка данных должна реализовываться в асинхронном потоке. Для этого вызываем DispatchQueue.main.async
-            DispatchQueue.main.async {
-                //проверяем пришла ли к нам ошибка
-                if let error = error {
-                    print("Some error")
-                    //                    completion(nil, error)
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let data = data else {return}
-                
-                
-                //парсинг необходимо проделывать в блоке do catch
-                do {
-                    // в первый параметр вставляем свою модель данных (структуру), которую мы хотим переконвертировать в наш json ответ. Во второй параметр вставляем откуда мы будем брать данные (data)
-                    let weatherData = try JSONDecoder().decode(WeatherStruct.self, from: data)
-                    //                    completion(weatherData, nil )
+            guard let data = data else {return}
+            guard error == nil else {return}
+            //парсинг необходимо проделывать в блоке do catch
+            do {
+                /* в первый параметр вставляем свою модель данных (структуру), которую мы хотим переконвертировать в наш json ответ.
+                 Во второй параметр вставляем откуда мы будем брать данные (data)*/
+                let weatherData = try JSONDecoder().decode(WeatherStruct.self, from: data)
+                //мы не можем перекрывать основной поток. Подгрузка данных должна реализовываться в асинхронном потоке. Для этого вызываем DispatchQueue.main.async
+                DispatchQueue.main.async {
                     completion(.success(weatherData))
-                    
-                } catch let jsonError {
-                    print("Failed to decode JSON ", jsonError)
-                    //                        completion(nil, jsonError)
-                    completion(.failure(jsonError))
                 }
+                
+            } catch let jsonError {
+                print("Failed to decode JSON", jsonError)
             }
         } .resume()
     }
@@ -58,85 +50,28 @@ class NetworkService {
     
     /*
      C 5 версии swift вышел спечиальный тип Result и мы можем писать не func request (urlString: String, completion: @escaping (WeatherStruct?, Error?) -> Void).
-     Result принимает в себя два объекта (два дженерика), где первый отвечает за тот тип, который мы получили, а второй за ошибку.
+     Result принимает в себя два объекта (два дженерика). Первый объект отвечает за тот тип, который мы получили, второй объект отвечает за ошибку.
      Для того, чтобы completion возвращал значения из вне, нам нужно написать ключевое слово @escaping.
      */
     func request (latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (Result<WeatherStruct, Error>) -> Void){
         let urlString = "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
+        print("URL string: location - ",urlString)
+        
         guard let url = URL(string: urlString) else {return }
         
-        // при помощи класса URLSession мы запрашиваем наши данные. На вход подаем наш url, а на выходе получаемcompletionHandler, который передает дату, которую мы получи, + респонс и ошибку
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            // ниже мы указываем, что будем делать с датой, которая к нам приходит
+            guard let data = data else {return}
+            guard error == nil else {return}
             
-            //мы не можем перекрывать основной поток. Подгрузка данных должна реализовываться в асинхронном потоке. Для этого вызываем DispatchQueue.main.async
-            DispatchQueue.main.async {
-                //проверяем пришла ли к нам ошибка
-                if let error = error {
-                    print("Some error")
-                    //                    completion(nil, error)
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let data = data else {return}
-                
-                
-                //парсинг необходимо проделывать в блоке do catch
-                do {
-                    // в первый параметр вставляем свою модель данных (структуру), которую мы хотим переконвертировать в наш json ответ. Во второй параметр вставляем откуда мы будем брать данные (data)
-                    let weatherData = try JSONDecoder().decode(WeatherStruct.self, from: data)
-                    //                    completion(weatherData, nil )
+            do {
+                let weatherData = try JSONDecoder().decode(WeatherStruct.self, from: data)
+                DispatchQueue.main.async {
                     completion(.success(weatherData))
-                    
-                } catch let jsonError {
-                    print("Failed to decode JSON ", jsonError)
-                    //                        completion(nil, jsonError)
-                    completion(.failure(jsonError))
                 }
+            } catch let jsonError {
+                print("Failed to decode JSON ", jsonError)
             }
         } .resume()
     }
     
-    /*
-     C 5 версии swift вышел спечиальный тип Result и мы можем писать не func request (urlString: String, completion: @escaping (WeatherStruct?, Error?) -> Void).
-     Result принимает в себя два объекта (два дженерика), где первый отвечает за тот тип, который мы получили, а второй за ошибку.
-     Для того, чтобы completion возвращал значения из вне, нам нужно написать ключевое слово @escaping.
-     */
-    //    func request (urlString: String, completion: @escaping (Result<WeatherStruct, Error>) -> Void){
-    //
-    //        guard let url = URL(string: urlString) else {return }
-    //
-    //        // при помощи класса URLSession мы запрашиваем наши данные. На вход подаем наш url, а на выходе получаемcompletionHandler, который передает дату, которую мы получи, + респонс и ошибку
-    //        URLSession.shared.dataTask(with: url) { (data, response, error) in
-    //            // ниже мы указываем, что будем делать с датой, которая к нам приходит
-    //
-    //            //мы не можем перекрывать основной поток. Подгрузка данных должна реализовываться в асинхронном потоке. Для этого вызываем DispatchQueue.main.async
-    //            DispatchQueue.main.async {
-    //                //проверяем пришла ли к нам ошибка
-    //                if let error = error {
-    //                    print("Some error")
-    //                    //                    completion(nil, error)
-    //                    completion(.failure(error))
-    //                    return
-    //                }
-    //
-    //                guard let data = data else {return}
-    //
-    //
-    //                //парсинг необходимо проделывать в блоке do catch
-    //                do {
-    //                    // в первый параметр вставляем свою модель данных (структуру), которую мы хотим переконвертировать в наш json ответ. Во второй параметр вставляем откуда мы будем брать данные (data)
-    //                    let weatherData = try JSONDecoder().decode(WeatherStruct.self, from: data)
-    //                    //                    completion(weatherData, nil )
-    //                    completion(.success(weatherData))
-    //
-    //                } catch let jsonError {
-    //                    print("Failed to decode JSON ", jsonError)
-    //                    //                        completion(nil, jsonError)
-    //                    completion(.failure(jsonError))
-    //                }
-    //            }
-    //        } .resume()
-    //    }
 }
