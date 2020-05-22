@@ -81,7 +81,7 @@ struct Weather: Codable {
 
 // MARK: - Wind
 struct Wind: Codable {
-    let speed: Double
-    let deg: Double
+    let speed: Double?
+    let deg: Double?
 }
 

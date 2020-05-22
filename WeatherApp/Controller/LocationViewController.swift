@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate {
-        
+    
     let locationManager = CLLocationManager()
     let networkService = NetworkService()
     var weatherStruct: WeatherStruct? = nil
@@ -21,7 +21,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var minMaxTempLabel: UILabel!
     
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
@@ -30,8 +29,29 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var temperatureView: UIView!
     @IBOutlet var backgroundView: UIView!
     
+    @IBOutlet weak var min: UILabel!
+    @IBOutlet weak var max: UILabel!
+    @IBOutlet weak var pressure: UILabel!
+    @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var descriptionWeather: UILabel!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cityNameLabel.text = "City"
+        feelLikeLabel.text = "feels like -- ℃"
+        conditionImageView.image = UIImage(named: "icon_na")
+        temperatureLabel.text = "--"
+        conditionLabel.text = "CONDITION"
+        view.backgroundColor = .systemGray2
+        
+        min.text = "--℃"
+        max.text = "--℃"
+        pressure.text = "--hPa"
+        humidity.text = "--%"
+        descriptionWeather.text = "description"
         
         setupLocationManager()
     }
@@ -69,7 +89,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                     // UI Updates
                     self?.cityNameLabel.text = weaatherStruct.name
                     self?.feelLikeLabel.text = "feels like \(Int(weaatherStruct.main.feelsLike)) ℃"
-                    self?.minMaxTempLabel.text = "\(Int(weaatherStruct.main.tempMin))˚/ \(Int(weaatherStruct.main.tempMax))˚"
                     self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
                     
                     for weather in weaatherStruct.weather {
@@ -80,7 +99,15 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                         self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
                         // Gradient background Updates //
                         self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
+                        
+                        self?.descriptionWeather.text = weather.weatherDescription
                     }
+                    
+                    self?.min.text = "\(Int(weaatherStruct.main.tempMin))℃"
+                    self?.max.text = "\(Int(weaatherStruct.main.tempMax))℃"
+                    self?.pressure.text = "\(weaatherStruct.main.pressure)hPa"
+                    self?.humidity.text = "\(weaatherStruct.main.humidity)%"
+                    
                     
                 // в случае провала выполняется действие:
                 case .failure(let error):

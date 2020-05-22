@@ -19,7 +19,6 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var minMaxTempLabel: UILabel!
     
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
@@ -30,6 +29,12 @@ class SearchViewController: UIViewController {
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var searchBarr: UISearchBar!
     
+    @IBOutlet weak var min: UILabel!
+    @IBOutlet weak var max: UILabel!
+    @IBOutlet weak var pressure: UILabel!
+    @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var descriptionWeather: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +44,14 @@ class SearchViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
-        minMaxTempLabel.text = "--˚ / --˚"
+        view.backgroundColor = .systemGray2
+        
+        min.text = "--℃"
+        max.text = "--℃"
+        pressure.text = "--hPa"
+        humidity.text = "--%"
+        descriptionWeather.text = "description"
+        
         
     }
     
@@ -51,31 +63,36 @@ extension SearchViewController: UISearchBarDelegate {
         //выводим в консоль вводимый текст(не будет показываться, пока не установим делегата)
         print(searchText)
         
-             // чтобы избежать утечки памяти, нужно добавить [weak self]
-             networkService.request(city: searchText) { [weak self] (result) in
-                 switch result {
-                 case .success(let weatherStruct):
-                     print(weatherStruct.base.count, weatherStruct)
-                     self?.weatherStruct = weatherStruct
-                     
-                     // UI Updates
-                     self?.cityNameLabel.text = weatherStruct.name
-                     self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
-                     self?.minMaxTempLabel.text = "\(Int(weatherStruct.main.tempMin))˚/ \(Int(weatherStruct.main.tempMax))˚"
-                     self?.temperatureLabel.text = "\(Int(weatherStruct.main.temp))"
-                     for weather in weatherStruct.weather {
-                         //localizedUppercase - получаем стрингу капсом
-                        self?.conditionLabel.text = weather.main.localizedUppercase
-                        // conditionImage
-                        self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
-                        // Gradient background Updates
-                        self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                        
-                     }
-                     
-                 case .failure(let error):
-                     print("error", error)
-                 }
-             }
+        // чтобы избежать утечки памяти, нужно добавить [weak self]
+        networkService.request(city: searchText) { [weak self] (result) in
+            switch result {
+            case .success(let weatherStruct):
+                print(weatherStruct.base.count, weatherStruct)
+                self?.weatherStruct = weatherStruct
+                
+                // UI Updates
+                self?.cityNameLabel.text = weatherStruct.name
+                self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
+                self?.temperatureLabel.text = "\(Int(weatherStruct.main.temp))"
+                for weather in weatherStruct.weather {
+                    //localizedUppercase - получаем стрингу капсом
+                    self?.conditionLabel.text = weather.main.localizedUppercase
+                    // conditionImage
+                    self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
+                    // Gradient background Updates
+                    self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
+                    
+                    self?.descriptionWeather.text = weather.weatherDescription
+                }
+                
+                self?.min.text = "\(Int(weatherStruct.main.tempMin))℃"
+                self?.max.text = "\(Int(weatherStruct.main.tempMax))℃"
+                self?.pressure.text = "\(weatherStruct.main.pressure)hPa"
+                self?.humidity.text = "\(weatherStruct.main.humidity)%"
+                
+            case .failure(let error):
+                print("error", error)
+            }
+        }
     }
 }
