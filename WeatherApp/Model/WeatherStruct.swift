@@ -57,11 +57,11 @@ struct Main: Codable {
 
 // MARK: - Sys
 struct Sys: Codable {
-    let type: Int
-    let id: Int
-    let country: String
-    let sunrise: Int
-    let sunset: Int
+    let type: Int?
+    let id: Int?
+    let country: String?
+    let sunrise: Int?
+    let sunset: Int?
 }
 
 // MARK: - Weather

@@ -26,7 +26,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
-    @IBOutlet weak var temperatureView: UIView!
     @IBOutlet var backgroundView: UIView!
     
     @IBOutlet weak var min: UILabel!
