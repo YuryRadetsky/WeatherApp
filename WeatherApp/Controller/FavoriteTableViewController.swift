@@ -9,9 +9,7 @@
 import UIKit
 
 class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    //    var favoriteCity: [String] = ["Minsk", "Moscow", "Cupertino"]
-    
+        
     var favoriteCity = UserSettings.shared.favoriteCity
     var city = ""
     
@@ -26,11 +24,12 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         table.reloadData()
     }
@@ -47,12 +46,12 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
         return UserSettings.shared.favoriteCity.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = UserSettings.shared.favoriteCity[indexPath.row]
         return cell
     }
-    
     
     ///функция для редактирования рядов
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -70,11 +69,13 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cities = UserSettings.shared.favoriteCity
         city = cities[indexPath.row]
         performSegue(withIdentifier: "FavoriteCityVC", sender: nil)
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let favoriteVC = segue.destination as? FavoriteViewController {

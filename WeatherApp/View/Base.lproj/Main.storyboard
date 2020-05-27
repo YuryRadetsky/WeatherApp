@@ -211,10 +211,10 @@
             </objects>
             <point key="canvasLocation" x="2036" y="-451"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="sAA-wH-ZRq">
             <objects>
-                <viewController id="2zy-UL-vXA" customClass="SearchViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2zy-UL-vXA" userLabel="Search" customClass="SearchViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KA7-do-nop">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -534,10 +534,10 @@
             </objects>
             <point key="canvasLocation" x="919" y="909"/>
         </scene>
-        <!--Location-->
+        <!--Favorite -->
         <scene sceneID="ZLj-0v-W4f">
             <objects>
-                <viewController id="po7-AM-hgN" customClass="FavoriteViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="po7-AM-hgN" userLabel="Favorite " customClass="FavoriteViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PjD-na-dkW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

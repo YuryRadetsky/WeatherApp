@@ -11,28 +11,23 @@ import UIKit
 class FavoriteViewController: UIViewController {
     
     let networkService = NetworkService()
-    var weatherStruct: WeatherStruct? = nil
-    
+    var weatherStruct: WeatherStruct?
     let gradient = Gradient()
     let image = Image()
-    
     var city = ""
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-        
-    @IBOutlet var backgroundView: UIView!
-    
     @IBOutlet weak var min: UILabel!
     @IBOutlet weak var max: UILabel!
     @IBOutlet weak var pressure: UILabel!
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var descriptionWeather: UILabel!
+    @IBOutlet var backgroundView: UIView!
     
     
     override func viewDidLoad() {
@@ -43,20 +38,19 @@ class FavoriteViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
-        view.backgroundColor = .systemGray2
-        
         min.text = "--℃"
         max.text = "--℃"
         pressure.text = "--hPa"
         humidity.text = "--%"
         descriptionWeather.text = "description"
+        view.backgroundColor = .systemGray2
         fetchFaviriteCity(city: city)
         
     }
     
     
     func fetchFaviriteCity (city: String ) {
-        networkService.request(city: city) { [weak self](result) in
+        networkService.request(city: city) { [weak self] (result) in
             switch result {
             // в случае успеха выполняется действие:
             case .success(let weaatherStruct):

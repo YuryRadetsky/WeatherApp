@@ -13,27 +13,22 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     let networkService = NetworkService()
-    var weatherStruct: WeatherStruct? = nil
-    
+    var weatherStruct: WeatherStruct?
     let gradient = Gradient()
     let image = Image()
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    
-    @IBOutlet var backgroundView: UIView!
-    
     @IBOutlet weak var min: UILabel!
     @IBOutlet weak var max: UILabel!
     @IBOutlet weak var pressure: UILabel!
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var descriptionWeather: UILabel!
-    
+    @IBOutlet var backgroundView: UIView!
     
     
     override func viewDidLoad() {
@@ -43,15 +38,13 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
-        conditionLabel.text = "CONDITION"
-        view.backgroundColor = .systemGray2
-        
+        conditionLabel.text = "CONDITION"        
         min.text = "--℃"
         max.text = "--℃"
         pressure.text = "--hPa"
         humidity.text = "--%"
         descriptionWeather.text = "description"
-        
+        view.backgroundColor = .systemGray2
         setupLocationManager()
     }
     
@@ -113,7 +106,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                     print("error", error)
                 }
             }
-            
         }
         
         //stopUpdatingLocation() останавливаем обновление локации

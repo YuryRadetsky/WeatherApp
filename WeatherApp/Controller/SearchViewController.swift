@@ -11,41 +11,37 @@ import UIKit
 class SearchViewController: UIViewController {
     
     var favoriteCity = UserSettings.shared.favoriteCity
-    
     let networkService = NetworkService()
-    var weatherStruct: WeatherStruct? = nil
-    
-    var delay: Timer?
-    
+    var weatherStruct: WeatherStruct? 
     let gradient = Gradient()
     let image = Image()
-    
-    @IBOutlet weak var saveButton: UIButton!
-    @IBAction func tapSaveButton(_ sender: Any) {
-        guard let city = searchBarr.searchTextField.text else {return}
-        guard !city.isEmpty else {return}
-        
-        UserSettings.shared.favoriteCity.append("\(city)")
-        UserSettings.shared.saveToDefaults()
-        print(UserSettings.shared.favoriteCity)
-    }
+    var delay: Timer?
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    
-    @IBOutlet var backgroundView: UIView!
-    @IBOutlet var searchBarr: UISearchBar!
-    
     @IBOutlet weak var min: UILabel!
     @IBOutlet weak var max: UILabel!
     @IBOutlet weak var pressure: UILabel!
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var descriptionWeather: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet var searchBarr: UISearchBar!
+    
+    @IBAction func tapSaveButton(_ sender: Any) {
+        guard let city = searchBarr.searchTextField.text else {return}
+        if city.isEmpty {
+            Alert().showAlert(title: "Alert", message: "Enter the city name", viewController: self)
+        } else {
+            UserSettings.shared.favoriteCity.append("\(city)")
+            UserSettings.shared.saveToDefaults()
+            print(UserSettings.shared.favoriteCity)
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -56,17 +52,16 @@ class SearchViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
-        view.backgroundColor = .systemGray2
-        
         min.text = "--℃"
         max.text = "--℃"
         pressure.text = "--hPa"
         humidity.text = "--%"
         descriptionWeather.text = "description"
+        view.backgroundColor = .systemGray2
     }
     
-    
 }
+
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
