@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+//swiftlint:disable trailing_whitespace
+//swiftlint:disable vertical_whitespace
 class FavoriteViewController: UIViewController {
     
     let networkService = NetworkService()
@@ -32,7 +33,6 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
@@ -45,14 +45,13 @@ class FavoriteViewController: UIViewController {
         descriptionWeather.text = "description"
         view.backgroundColor = .systemGray2
         fetchFaviriteCity(city: city)
-        
     }
     
     
     func fetchFaviriteCity (city: String ) {
         networkService.request(city: city) { [weak self] (result) in
             switch result {
-            // в случае успеха выполняется действие:
+            // в случае success выполняется действие:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
                 self?.weatherStruct = weaatherStruct
@@ -64,22 +63,18 @@ class FavoriteViewController: UIViewController {
                 for weather in weaatherStruct.weather {
                     //localizedUppercase - получаем стрингу капсом
                     self?.conditionLabel.text = weather.main.localizedUppercase
-                    print(weather.id)
+                    self?.descriptionWeather.text = weather.weatherDescription
                     // Image Updates
                     self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
                     // Gradient background Updates //
                     self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                    
-                    self?.descriptionWeather.text = weather.weatherDescription
                 }
-                
                 self?.min.text = "\(Int(weaatherStruct.main.tempMin))℃"
                 self?.max.text = "\(Int(weaatherStruct.main.tempMax))℃"
                 self?.pressure.text = "\(weaatherStruct.main.pressure)hPa"
                 self?.humidity.text = "\(weaatherStruct.main.humidity)%"
                 
-                
-            // в случае провала выполняется действие:
+            // в случае failure выполняется действие:
             case .failure(let error):
                 print("error", error)
             }
@@ -89,4 +84,3 @@ class FavoriteViewController: UIViewController {
     
     
 }
-

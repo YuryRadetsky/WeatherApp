@@ -7,15 +7,16 @@
 //
 
 import UIKit
+//swiftlint:disable identifier_name
 
 class Gradient {
-    
+
     // Gradient background Updates
     func setupBackgroundColor(weatherId: Int, viewController: UIViewController) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = viewController.view.bounds
         viewController.view.layer.insertSublayer(gradientLayer, at: 0)
-        
+
         let id = weatherId
         switch id {
         case 200...232:
@@ -44,7 +45,7 @@ class Gradient {
             gradientLayer.colors = [UIColor(ciColor: .black).cgColor, UIColor(ciColor: .red).cgColor]
             print("N/A")
         }
-        
+
     }
-    
+
 }

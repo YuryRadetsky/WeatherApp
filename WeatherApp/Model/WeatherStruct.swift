@@ -7,7 +7,8 @@
 //
 
 import Foundation
-
+//swiftlint:disable identifier_name
+//swiftlint:disable trailing_whitespace
 // MARK: - WeatherStruct
 struct WeatherStruct: Codable {
     let coord: Coord
@@ -84,4 +85,3 @@ struct Wind: Codable {
     let speed: Double?
     let deg: Double?
 }
-

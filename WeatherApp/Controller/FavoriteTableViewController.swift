@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//swiftlint:disable trailing_whitespace
+//swiftlint:disable vertical_whitespace
 
 class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
@@ -61,8 +63,9 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     ///функция для редактирования рядов
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             UserSettings.shared.favoriteCity.remove(at: indexPath.row)
             UserSettings.shared.saveToDefaults()
             tableView.reloadData()

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//swiftlint:disable vertical_whitespace
+//swiftlint:disable trailing_whitespace
 
 class SearchViewController: UIViewController {
     
@@ -31,7 +33,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var searchBarr: UISearchBar!
-    
+  
     @IBAction func tapSaveButton(_ sender: Any) {
         guard let city = searchBarr.searchTextField.text else {return}
         if city.isEmpty {
@@ -43,10 +45,8 @@ class SearchViewController: UIViewController {
         }
     }
     
-    
-    override func viewDidLoad() {
+   override func viewDidLoad() {
         super.viewDidLoad()
-        
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
@@ -70,28 +70,23 @@ extension SearchViewController: UISearchBarDelegate {
         
         delay?.invalidate()
         delay = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-            // чтобы избежать утечки памяти, нужно добавить [weak self]
             self.networkService.request(city: searchText) { [weak self] (result) in
                 switch result {
                 case .success(let weatherStruct):
                     print(weatherStruct.base.count, weatherStruct)
                     self?.weatherStruct = weatherStruct
-                    
                     // UI Updates
                     self?.cityNameLabel.text = weatherStruct.name
                     self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
                     self?.temperatureLabel.text = "\(Int(weatherStruct.main.temp))"
                     for weather in weatherStruct.weather {
-                        //localizedUppercase - получаем стрингу капсом
                         self?.conditionLabel.text = weather.main.localizedUppercase
+                        self?.descriptionWeather.text = weather.weatherDescription
                         // conditionImage
                         self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
                         // Gradient background Updates
                         self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                        
-                        self?.descriptionWeather.text = weather.weatherDescription
                     }
-                    
                     self?.min.text = "\(Int(weatherStruct.main.tempMin))℃"
                     self?.max.text = "\(Int(weatherStruct.main.tempMax))℃"
                     self?.pressure.text = "\(weatherStruct.main.pressure)hPa"
