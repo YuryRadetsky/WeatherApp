@@ -1,0 +1,8 @@
+excluded:
+  - /Pods/
+line_length: 220
+disabled_rules:
+  - identifier_name
+  - trailing_whitespace
+  - trailing_whitespac
+  - line_length

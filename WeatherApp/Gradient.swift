@@ -7,53 +7,45 @@
 //
 
 import UIKit
+//swiftlint:disable identifier_name
 
 class Gradient {
-    
+
     // Gradient background Updates
-    func setupBackgroundColor(weatherId: Int) {
-        let viewController = UIViewController()
+    func setupBackgroundColor(weatherId: Int, viewController: UIViewController) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = viewController.view.bounds
         viewController.view.layer.insertSublayer(gradientLayer, at: 0)
-        
+
         let id = weatherId
         switch id {
         case 200...232:
-            gradientLayer.colors = [UIColor(red: 135/255, green: 80/255, blue: 200/255, alpha: 1).cgColor,
-                                    UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .blue).cgColor, UIColor(ciColor: .black).cgColor]
             print("Thunderstorm")
         case 300...321:
-            gradientLayer.colors = [UIColor(red: 135/255, green: 80/255, blue: 200/255, alpha: 1).cgColor,
-                                    UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .gray).cgColor, UIColor(ciColor: .white).cgColor]
             print("Drizzle")
         case 500...531:
-            gradientLayer.colors = [UIColor(red: 135/255, green: 80/255, blue: 200/255, alpha: 1).cgColor,
-                                    UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .gray).cgColor, UIColor(ciColor: .cyan).cgColor]
             print("Rain")
         case 600...622:
-            gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                    UIColor(red: 100/255, green: 90/255, blue: 230/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .white).cgColor, UIColor(ciColor: .gray).cgColor]
             print("Snow")
         case 701...781:
-            gradientLayer.colors = [UIColor(red: 150/255, green: 90/255, blue: 210/255, alpha: 1).cgColor,
-                                    UIColor(red: 90/255, green: 80/255, blue: 250/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .cyan).cgColor, UIColor(ciColor: .gray).cgColor]
             print("Atmosphere")
         case 800:
-            gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                    UIColor(red: 80/255, green: 70/255, blue: 240/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .red).cgColor, UIColor(ciColor: .yellow).cgColor]
             print("Clear")
         case 801...804:
-            gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                    UIColor(red: 70/255, green: 60/255, blue: 230/255, alpha: 1).cgColor]
+            gradientLayer.colors = [UIColor(ciColor: .black).cgColor, UIColor(ciColor: .cyan).cgColor]
+
             print("Clouds")
         default:
-            gradientLayer.colors = [UIColor(red: 145/255, green: 85/255, blue: 205/255, alpha: 1).cgColor,
-                                    UIColor(red: 70/255, green: 60/255, blue: 230/255, alpha: 1).cgColor]
-            //            viewController.view.backgroundColor = .red
+            gradientLayer.colors = [UIColor(ciColor: .black).cgColor, UIColor(ciColor: .red).cgColor]
             print("N/A")
         }
-        
+
     }
-    
+
 }
