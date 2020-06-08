@@ -7,12 +7,12 @@
 //
 
 import UIKit
+//swiftlint:disable identifier_name
 
 class Image {
 
-    func weatherCondition(weatherId: Int) {
-        let imageView = UIImageView()
-        
+    func weatherCondition(weatherId: Int, imageView: UIImageView) {
+
         let id = weatherId
         switch id {
         case 200...232:
@@ -41,5 +41,5 @@ class Image {
             print("N/A")
         }
     }
-    
+
 }
