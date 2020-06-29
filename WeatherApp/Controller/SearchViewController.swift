@@ -12,13 +12,6 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    var favoriteCity = UserSettings.shared.favoriteCity
-    let networkService = NetworkService()
-    var weatherStruct: WeatherStruct? 
-    let gradient = Gradient()
-    let image = Image()
-    var delay: Timer?
-    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -34,6 +27,15 @@ class SearchViewController: UIViewController {
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var searchBarr: UISearchBar!
   
+    
+    var favoriteCity = UserSettings.shared.favoriteCity
+    let networkService = NetworkService()
+    var weatherStruct: WeatherStruct?
+    let gradient = Gradient()
+    let image = Image()
+    var delay: Timer?
+    
+    
     @IBAction func tapSaveButton(_ sender: Any) {
         guard let city = searchBarr.searchTextField.text else {return}
         if city.isEmpty {

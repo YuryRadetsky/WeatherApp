@@ -12,18 +12,11 @@ import UIKit
 
 class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
-    var favoriteCity = UserSettings.shared.favoriteCity
-    var city = ""
-    
     @IBOutlet var table: UITableView!
     
-    @IBAction func tapEditButton(_ sender: Any) {
-        if table.isEditing {
-            table.isEditing = false
-        } else {
-            table.isEditing = true
-        }
-    }
+    
+    var favoriteCity = UserSettings.shared.favoriteCity
+    var city = ""
     
     
     override func viewDidLoad() {
@@ -34,6 +27,15 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(_ animated: Bool) {
         table.reloadData()
+    }
+    
+    
+    @IBAction func tapEditButton(_ sender: Any) {
+        if table.isEditing {
+            table.isEditing = false
+        } else {
+            table.isEditing = true
+        }
     }
     
     

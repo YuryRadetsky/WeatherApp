@@ -14,12 +14,6 @@ import CoreLocation
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
-    let locationManager = CLLocationManager()
-    let networkService = NetworkService()
-    var weatherStruct: WeatherStruct?
-    let gradient = Gradient()
-    let image = Image()
-    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -32,6 +26,14 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var descriptionWeather: UILabel!
     @IBOutlet var backgroundView: UIView!
+    
+    
+    let locationManager = CLLocationManager()
+    let networkService = NetworkService()
+    var weatherStruct: WeatherStruct?
+    let gradient = Gradient()
+    let image = Image()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,12 +11,6 @@ import UIKit
 //swiftlint:disable vertical_whitespace
 class FavoriteViewController: UIViewController {
     
-    let networkService = NetworkService()
-    var weatherStruct: WeatherStruct?
-    let gradient = Gradient()
-    let image = Image()
-    var city = ""
-    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -29,6 +23,13 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var descriptionWeather: UILabel!
     @IBOutlet var backgroundView: UIView!
+    
+    
+    let networkService = NetworkService()
+    var weatherStruct: WeatherStruct?
+    let gradient = Gradient()
+    let image = Image()
+    var city = ""
     
     
     override func viewDidLoad() {
