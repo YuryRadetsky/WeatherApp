@@ -10,20 +10,24 @@ import Foundation
 //swiftlint:disable trailing_whitespace
 
 class UserSettings {
-        static let shared = UserSettings()
+    
+    static let shared = UserSettings()
+    
+    var favoriteCity: [String] = []
+    let citiesFromDefaults = UserDefaults.standard.array(forKey: "saveCity")
+    
+    
+    private let defaults = UserDefaults.standard
+    
+    
     private init() {
         let citiesFromDefaults = defaults.array(forKey: "saveCity")
         guard citiesFromDefaults != nil else {return}
         favoriteCity = citiesFromDefaults as? [String] ?? []
     }
     
-    private let defaults = UserDefaults.standard
-    
-    var favoriteCity: [String] = []
-    let citiesFromDefaults = UserDefaults.standard.array(forKey: "saveCity")
     
     func saveToDefaults() {
         defaults.set(favoriteCity, forKey: "saveCity")
-
     }
 }
