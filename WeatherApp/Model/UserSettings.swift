@@ -13,21 +13,21 @@ class UserSettings {
     
     static let shared = UserSettings()
     
-    var favoriteCity: [String] = []
-    let citiesFromDefaults = UserDefaults.standard.array(forKey: "saveCity")
-    
-    
-    private let defaults = UserDefaults.standard
-    
-    
-    private init() {
-        let citiesFromDefaults = defaults.array(forKey: "saveCity")
-        guard citiesFromDefaults != nil else {return}
-        favoriteCity = citiesFromDefaults as? [String] ?? []
+    var favoriteCity: [String] {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "saveCity")
+            UserDefaults.standard.synchronize()
+        }
+        get {
+            let citiesFromDefaults = UserDefaults.standard.array(forKey: "saveCity") as? [String]
+            guard citiesFromDefaults != nil else {return []}
+            return citiesFromDefaults ?? []
+        }
     }
     
+    private init() {}
     
     func saveToDefaults() {
-        defaults.set(favoriteCity, forKey: "saveCity")
+        UserDefaults.standard.set(favoriteCity, forKey: "saveCity")
     }
 }

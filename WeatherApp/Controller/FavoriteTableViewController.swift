@@ -14,7 +14,6 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
         
     @IBOutlet var table: UITableView!
     
-    
     var favoriteCity = UserSettings.shared.favoriteCity
     var city = ""
     
@@ -57,14 +56,14 @@ class FavoriteTableViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    ///функция для редактирования рядов
+
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         UserSettings.shared.favoriteCity.swapAt(sourceIndexPath.row, destinationIndexPath.row )
         UserSettings.shared.saveToDefaults()
         tableView.reloadData()
     }
     
-    ///функция для редактирования рядов
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

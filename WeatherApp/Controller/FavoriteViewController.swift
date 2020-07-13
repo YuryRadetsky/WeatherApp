@@ -11,6 +11,7 @@ import UIKit
 //swiftlint:disable vertical_whitespace
 class FavoriteViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -45,6 +46,7 @@ class FavoriteViewController: UIViewController {
         humidity.text = "--%"
         descriptionWeather.text = "description"
         view.backgroundColor = .systemGray2
+        
         fetchFaviriteCity(city: city)
     }
     
@@ -52,7 +54,6 @@ class FavoriteViewController: UIViewController {
     func fetchFaviriteCity (city: String ) {
         networkService.request(city: city) { [weak self] (result) in
             switch result {
-            // в случае success выполняется действие:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
                 self?.weatherStruct = weaatherStruct
@@ -62,7 +63,6 @@ class FavoriteViewController: UIViewController {
                 self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
                 
                 for weather in weaatherStruct.weather {
-                    //localizedUppercase - получаем стрингу капсом
                     self?.conditionLabel.text = weather.main.localizedUppercase
                     self?.descriptionWeather.text = weather.weatherDescription
                     // Image Updates
@@ -74,14 +74,10 @@ class FavoriteViewController: UIViewController {
                 self?.max.text = "\(Int(weaatherStruct.main.tempMax))℃"
                 self?.pressure.text = "\(weaatherStruct.main.pressure)hPa"
                 self?.humidity.text = "\(weaatherStruct.main.humidity)%"
-                
-            // в случае failure выполняется действие:
             case .failure(let error):
                 print("error", error)
             }
         }
-        
     }
-    
     
 }

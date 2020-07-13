@@ -12,6 +12,7 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -67,7 +68,6 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //выводим в консоль вводимый текст(не будет показываться, пока не установим делегата)
         print(searchText)
         
         delay?.invalidate()
