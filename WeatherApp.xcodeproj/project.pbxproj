@@ -66,6 +66,8 @@
 		560F91792469DD10004B4B91 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				567C846124267FDD00D4A8CC /* AppDelegate.swift */,
+				567C846324267FDD00D4A8CC /* SceneDelegate.swift */,
 				567C846524267FDD00D4A8CC /* LocationViewController.swift */,
 				5643263424548CDF0011A044 /* SearchViewController.swift */,
 				5699AFAD247A9A90002AB8F5 /* FavoriteTableViewController.swift */,
@@ -97,16 +99,19 @@
 			children = (
 				56DB0982244E0FD7004AECD2 /* WeatherStruct.swift */,
 				5699AFB1247AD1DA002AB8F5 /* UserSettings.swift */,
+				5678723D247F09AC00A42970 /* Alert.swift */,
+				56B990502463374A0002F5D9 /* Image.swift */,
+				56B9904E246332FA0002F5D9 /* Gradient.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5643263D2454D3120011A044 /* Networking */ = {
+		5643263D2454D3120011A044 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
 				5643263A2454C9960011A044 /* NetworkService.swift */,
 			);
-			path = Networking;
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		567C845524267FDD00D4A8CC = {
@@ -130,19 +135,22 @@
 		567C846024267FDD00D4A8CC /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				567C846124267FDD00D4A8CC /* AppDelegate.swift */,
-				567C846324267FDD00D4A8CC /* SceneDelegate.swift */,
-				56B990502463374A0002F5D9 /* Image.swift */,
-				56B9904E246332FA0002F5D9 /* Gradient.swift */,
-				5678723D247F09AC00A42970 /* Alert.swift */,
+				567C846F24267FDF00D4A8CC /* Info.plist */,
+				5643263C2454D2F40011A044 /* Model */,
 				560F917C2469F6A7004B4B91 /* View */,
 				560F91792469DD10004B4B91 /* Controller */,
-				5643263C2454D2F40011A044 /* Model */,
-				5643263D2454D3120011A044 /* Networking */,
-				567C846A24267FDE00D4A8CC /* Assets.xcassets */,
-				567C846F24267FDF00D4A8CC /* Info.plist */,
+				5643263D2454D3120011A044 /* NetworkService */,
+				56D79C4F24C4A89100F2EDC2 /* Supporting files */,
 			);
 			path = WeatherApp;
+			sourceTree = "<group>";
+		};
+		56D79C4F24C4A89100F2EDC2 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				567C846A24267FDE00D4A8CC /* Assets.xcassets */,
+			);
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 		DEF957DC3FC26DF8C08F2BEA /* Pods */ = {
