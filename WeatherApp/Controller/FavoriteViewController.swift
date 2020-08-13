@@ -40,10 +40,10 @@ class FavoriteViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
-        min.text = "--℃"
-        max.text = "--℃"
-        pressure.text = "--hPa"
-        humidity.text = "--%"
+        min.text = "-- ℃"
+        max.text = "-- ℃"
+        pressure.text = "-- hPa"
+        humidity.text = "-- %"
         descriptionWeather.text = "description"
         view.backgroundColor = .systemGray2
         
@@ -59,7 +59,7 @@ class FavoriteViewController: UIViewController {
                 self?.weatherStruct = weaatherStruct
                 // UI Updates
                 self?.cityNameLabel.text = weaatherStruct.name
-                self?.feelLikeLabel.text = "feels like \(Int(weaatherStruct.main.feelsLike)) ℃"
+                self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
                 self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
                 
                 for weather in weaatherStruct.weather {
@@ -70,10 +70,10 @@ class FavoriteViewController: UIViewController {
                     // Gradient background Updates //
                     self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
                 }
-                self?.min.text = "\(Int(weaatherStruct.main.tempMin))℃"
-                self?.max.text = "\(Int(weaatherStruct.main.tempMax))℃"
-                self?.pressure.text = "\(weaatherStruct.main.pressure)hPa"
-                self?.humidity.text = "\(weaatherStruct.main.humidity)%"
+                self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
+                self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
+                self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
+                self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
             case .failure(let error):
                 print("error", error)
             }

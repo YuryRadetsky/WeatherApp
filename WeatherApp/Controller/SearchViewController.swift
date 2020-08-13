@@ -37,17 +37,6 @@ class SearchViewController: UIViewController {
     var delay: Timer?
     
     
-    @IBAction func tapSaveButton(_ sender: Any) {
-        guard let city = searchBarr.searchTextField.text else {return}
-        if city.isEmpty {
-            Alert().showAlert(title: "Alert", message: "Enter the city name", viewController: self)
-        } else {
-            UserSettings.shared.favoriteCity.append("\(city)")
-            UserSettings.shared.saveToDefaults()
-            print(UserSettings.shared.favoriteCity)
-        }
-    }
-    
    override func viewDidLoad() {
         super.viewDidLoad()
         cityNameLabel.text = "City"
@@ -55,12 +44,24 @@ class SearchViewController: UIViewController {
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
         conditionLabel.text = "CONDITION"
-        min.text = "--℃"
-        max.text = "--℃"
-        pressure.text = "--hPa"
-        humidity.text = "--%"
+        min.text = "-- ℃"
+        max.text = "-- ℃"
+        pressure.text = "-- hPa"
+        humidity.text = "-- %"
         descriptionWeather.text = "description"
         view.backgroundColor = .systemGray2
+    }
+    
+    @IBAction func tapSaveButton(_ sender: Any) {
+        guard let city = searchBarr.searchTextField.text else {return}
+        if city.isEmpty {
+            Alert().showAlert(title: "Alert", message: "Enter the city name", viewController: self)
+        } else {
+            UserSettings.shared.favoriteCity.append("\(city)")
+            UserSettings.shared.saveToDefaults()
+            searchBarr.text = nil
+            print(UserSettings.shared.favoriteCity)
+        }
     }
     
 }
@@ -79,8 +80,8 @@ extension SearchViewController: UISearchBarDelegate {
                     self?.weatherStruct = weatherStruct
                     // UI Updates
                     self?.cityNameLabel.text = weatherStruct.name
-                    self?.feelLikeLabel.text = "feels like \(Int(weatherStruct.main.feelsLike)) ℃"
-                    self?.temperatureLabel.text = "\(Int(weatherStruct.main.temp))"
+                    self?.feelLikeLabel.text = "feels like " + String(Int(weatherStruct.main.feelsLike)) + " ℃"
+                    self?.temperatureLabel.text = String(Int(weatherStruct.main.temp))
                     for weather in weatherStruct.weather {
                         self?.conditionLabel.text = weather.main.localizedUppercase
                         self?.descriptionWeather.text = weather.weatherDescription
@@ -89,10 +90,10 @@ extension SearchViewController: UISearchBarDelegate {
                         // Gradient background Updates
                         self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
                     }
-                    self?.min.text = "\(Int(weatherStruct.main.tempMin))℃"
-                    self?.max.text = "\(Int(weatherStruct.main.tempMax))℃"
-                    self?.pressure.text = "\(weatherStruct.main.pressure)hPa"
-                    self?.humidity.text = "\(weatherStruct.main.humidity)%"
+                    self?.min.text = String(Int(weatherStruct.main.tempMin)) + " ℃"
+                    self?.max.text = String(Int(weatherStruct.main.tempMax)) + " ℃"
+                    self?.pressure.text = String(weatherStruct.main.pressure) + " hPa"
+                    self?.humidity.text = String(weatherStruct.main.humidity) + " %"
                     
                 case .failure(let error):
                     print("error", error)
