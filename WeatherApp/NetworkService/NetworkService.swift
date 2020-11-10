@@ -17,6 +17,9 @@ class NetworkService {
     
     
     func request (city: String, completion: @escaping (Result<WeatherStruct, Error>) -> Void) {
+        
+        let city = city.split(separator: " ").joined(separator: "%20")
+        
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
         print("URL string: city - ", urlString)
         
