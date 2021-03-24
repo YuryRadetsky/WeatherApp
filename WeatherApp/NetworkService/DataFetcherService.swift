@@ -19,15 +19,15 @@ class DataFetcherService {
         self.networkDataFetcher = networkDataFetcher
     }
     
-    func fetchWeatherData (forCity city: String, completion: @escaping (WeatherStruct?) -> Void) {
+    func fetchWeatherData (forCity city: String, completion: @escaping (WeatherModel?) -> Void) {
         let city = city.split(separator: " ").joined(separator: "%20")
         let urlString = APIManager.shared.getCityURL(forCity: city)
-        networkDataFetcher.fetchData(urlString: urlString, completion: completion)
+        networkDataFetcher.fetchGenericData(urlString: urlString, completion: completion)
     }
     
-    func fetchWeatherData (latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (WeatherStruct?) -> Void) {
+    func fetchWeatherData (latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (WeatherModel?) -> Void) {
         let urlString = APIManager.shared.getLocationURL(latitude: latitude, longitude: longitude)
-        networkDataFetcher.fetchData(urlString: urlString, completion: completion)
+        networkDataFetcher.fetchGenericData(urlString: urlString, completion: completion)
     }
     
 }

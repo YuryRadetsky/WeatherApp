@@ -9,8 +9,8 @@
 import Foundation
 //swiftlint:disable identifier_name
 //swiftlint:disable trailing_whitespace
-// MARK: - WeatherStruct
-struct WeatherStruct: Codable {
+// MARK: - WeatherModel
+struct WeatherModel: Codable {
     let coord: Coord
     let weather: [Weather]
     let base: String

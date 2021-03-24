@@ -13,6 +13,8 @@ class UserSettings {
     
     static let shared = UserSettings()
     
+    private init() {}
+    
     var favoriteCity: [String] {
         set {
             UserDefaults.standard.set(newValue, forKey: "saveCity")
@@ -24,8 +26,6 @@ class UserSettings {
             return citiesFromDefaults ?? []
         }
     }
-    
-    private init() {}
     
     func saveToDefaults() {
         UserDefaults.standard.set(favoriteCity, forKey: "saveCity")

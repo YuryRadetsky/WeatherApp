@@ -27,7 +27,7 @@ class FavoriteViewController: UIViewController {
     
     
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherStruct?
+    var weatherStruct: WeatherModel?
     let gradient = Gradient()
     let image = Image()
     var city = ""

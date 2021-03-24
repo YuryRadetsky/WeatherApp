@@ -9,16 +9,17 @@
 import Foundation
 
 protocol DataFetcher {
-    func fetchData(urlString: String, completion: @escaping (WeatherStruct?) -> Void)
+    func fetchGenericData<T: Codable> (urlString: String, completion: @escaping (T?) -> Void)
 }
 
 class NetworkDataFetcher: DataFetcher {
-    func fetchData(urlString: String, completion: @escaping (WeatherStruct?) -> Void) {
+    
+    func fetchGenericData<T: Codable>(urlString: String, completion: @escaping (T?) -> Void) {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
-                let response = try JSONDecoder().decode(WeatherStruct.self, from: data)
+                let response = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
                     completion(response)
                 }

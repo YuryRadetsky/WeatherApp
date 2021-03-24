@@ -31,7 +31,7 @@ class SearchViewController: UIViewController {
     
     var favoriteCity = UserSettings.shared.favoriteCity
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherStruct?
+    var weatherStruct: WeatherModel?
     let gradient = Gradient()
     let image = Image()
     var delay: Timer?

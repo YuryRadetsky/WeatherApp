@@ -31,7 +31,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherStruct?
+    var weatherStruct: WeatherModel?
     let gradient = Gradient()
     let image = Image()
     
