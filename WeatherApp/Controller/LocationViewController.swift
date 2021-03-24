@@ -30,7 +30,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     
     let locationManager = CLLocationManager()
-    let networkService = NetworkService()
+    let networkService = DataFetcherService()
     var weatherStruct: WeatherStruct?
     let gradient = Gradient()
     let image = Image()
@@ -68,40 +68,32 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             print(latitude, longitude)
-            networkService.request(latitude: latitude, longitude: longitude) { [weak self] (result) in
-                switch result {
-                    
-                case .success(let weaatherStruct):
-                    print(weaatherStruct.base.count)
-                    self?.weatherStruct = weaatherStruct
-                    // UI Updates
-                    self?.cityNameLabel.text = weaatherStruct.name
-                    self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
-                    self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
-                    for weather in weaatherStruct.weather {
-                        self?.conditionLabel.text = weather.main.localizedUppercase
-                        self?.descriptionWeather.text = weather.weatherDescription
-                        print(weather.id)
-                        // Image Updates
-                        self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
-                        // Gradient background Updates
-                        self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                    }
-                    self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
-                    self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
-                    self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
-                    self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
-                    
-                case .failure(let error):
-                    print("error", error)
+            networkService.fetchWeather(latitude: latitude, longitude: longitude) { [weak self] (weaatherStruct) in
+                guard let weaatherStruct = weaatherStruct else { return }
+                print(weaatherStruct.base.count)
+                // UI Updates
+                self?.cityNameLabel.text = weaatherStruct.name
+                self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
+                self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
+                for weather in weaatherStruct.weather {
+                    self?.conditionLabel.text = weather.main.localizedUppercase
+                    self?.descriptionWeather.text = weather.weatherDescription
+                    print(weather.id)
+                    // Image Updates
+                    self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
+                    // Gradient background Updates
+                    self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
                 }
+                self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
+                self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
+                self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
+                self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
             }
         }
         locationManager.stopUpdatingLocation()
     }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Can't get location", error)
-    }
-    
+}
+
+func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("Can't get location", error)
 }

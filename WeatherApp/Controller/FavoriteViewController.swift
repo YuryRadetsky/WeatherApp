@@ -26,7 +26,7 @@ class FavoriteViewController: UIViewController {
     @IBOutlet var backgroundView: UIView!
     
     
-    let networkService = NetworkService()
+    let networkService = DataFetcherService()
     var weatherStruct: WeatherStruct?
     let gradient = Gradient()
     let image = Image()
@@ -52,32 +52,25 @@ class FavoriteViewController: UIViewController {
     
     
     func fetchFaviriteCity (city: String ) {
-        networkService.request(city: city) { [weak self] (result) in
-            switch result {
-            case .success(let weaatherStruct):
-                print(weaatherStruct.base.count)
-                self?.weatherStruct = weaatherStruct
-                // UI Updates
-                self?.cityNameLabel.text = weaatherStruct.name
-                self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
-                self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
-                
-                for weather in weaatherStruct.weather {
-                    self?.conditionLabel.text = weather.main.localizedUppercase
-                    self?.descriptionWeather.text = weather.weatherDescription
-                    // Image Updates
-                    self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
-                    // Gradient background Updates //
-                    self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                }
-                self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
-                self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
-                self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
-                self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
-            case .failure(let error):
-                print("error", error)
+        networkService.fetchWeather(forCity: city) { [weak self] (weaatherStruct) in
+            guard let weaatherStruct = weaatherStruct else { return }
+            // UI Updates
+            self?.cityNameLabel.text = weaatherStruct.name
+            self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
+            self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
+            
+            for weather in weaatherStruct.weather {
+                self?.conditionLabel.text = weather.main.localizedUppercase
+                self?.descriptionWeather.text = weather.weatherDescription
+                // Image Updates
+                self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
+                // Gradient background Updates //
+                self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
             }
+            self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
+            self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
+            self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
+            self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
         }
     }
-    
 }

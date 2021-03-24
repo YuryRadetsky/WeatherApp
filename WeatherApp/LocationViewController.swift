@@ -8,13 +8,15 @@
 
 import UIKit
 import CoreLocation
+//swiftlint:disable vertical_whitespace
+//swiftlint:disable trailing_whitespace
 
 class LocationViewController: UIViewController {
     
     let urlString = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=da2798e7e8c96956caff9ac80cce3ebe"
     
     let networkService = NetworkService()
-    var weatherStruct: WeatherStruct? = nil
+    var weatherStruct: WeatherStruct?
     
     var gradient = Gradient()
     var image = Image()
@@ -36,7 +38,7 @@ class LocationViewController: UIViewController {
         // чтобы избежать утечки памяти, нужно добавить [weak self]
         networkService.request(urlString: urlString) { [weak self] (result) in
             switch result {
-                
+            
             // в случае успеха выполняются действия:
             case .success(let weaatherStruct):
                 print(weaatherStruct.base.count)
@@ -57,7 +59,6 @@ class LocationViewController: UIViewController {
                     self?.gradient.setupBackgroundColor(weatherId: weather.id)
                 }
                 
-            // в случае провала выполняются действия:
             case .failure(let error):
                 print("error", error)
             }
@@ -65,4 +66,3 @@ class LocationViewController: UIViewController {
     }
     
 }
-

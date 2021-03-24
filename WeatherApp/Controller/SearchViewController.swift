@@ -27,17 +27,17 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var searchBarr: UISearchBar!
-  
+    
     
     var favoriteCity = UserSettings.shared.favoriteCity
-    let networkService = NetworkService()
+    let networkService = DataFetcherService()
     var weatherStruct: WeatherStruct?
     let gradient = Gradient()
     let image = Image()
     var delay: Timer?
     
     
-   override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
@@ -79,31 +79,27 @@ extension SearchViewController: UISearchBarDelegate {
         
         delay?.invalidate()
         delay = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-            self.networkService.request(city: searchText) { [weak self] (result) in
-                switch result {
-                case .success(let weatherStruct):
-                    print(weatherStruct.base.count, weatherStruct)
-                    self?.weatherStruct = weatherStruct
-                    // UI Updates
-                    self?.cityNameLabel.text = weatherStruct.name
-                    self?.feelLikeLabel.text = "feels like " + String(Int(weatherStruct.main.feelsLike)) + " ℃"
-                    self?.temperatureLabel.text = String(Int(weatherStruct.main.temp))
-                    for weather in weatherStruct.weather {
-                        self?.conditionLabel.text = weather.main.localizedUppercase
-                        self?.descriptionWeather.text = weather.weatherDescription
-                        // conditionImage
-                        self?.image.weatherCondition(weatherId: weather.id, imageView: self!.conditionImageView)
-                        // Gradient background Updates
-                        self?.gradient.setupBackgroundColor(weatherId: weather.id, viewController: self!)
-                    }
-                    self?.min.text = String(Int(weatherStruct.main.tempMin)) + " ℃"
-                    self?.max.text = String(Int(weatherStruct.main.tempMax)) + " ℃"
-                    self?.pressure.text = String(weatherStruct.main.pressure) + " hPa"
-                    self?.humidity.text = String(weatherStruct.main.humidity) + " %"
-                    
-                case .failure(let error):
-                    print("error", error)
+            self.networkService.fetchWeather(forCity: searchText) { [weak self] (weatherStruct) in
+                guard let weatherStruct = weatherStruct else { return }
+                print(weatherStruct.base.count, weatherStruct)
+                self?.weatherStruct = weatherStruct
+                // UI Updates
+                self?.cityNameLabel.text = weatherStruct.name
+                self?.feelLikeLabel.text = "feels like " + String(Int(weatherStruct.main.feelsLike)) + " ℃"
+                self?.temperatureLabel.text = String(Int(weatherStruct.main.temp))
+                for weather in weatherStruct.weather {
+                    self?.conditionLabel.text = weather.main.localizedUppercase
+                    self?.descriptionWeather.text = weather.weatherDescription
+                    // conditionImage
+                    self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
+                    // Gradient background Updates
+                    self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
                 }
+                self?.min.text = String(Int(weatherStruct.main.tempMin)) + " ℃"
+                self?.max.text = String(Int(weatherStruct.main.tempMax)) + " ℃"
+                self?.pressure.text = String(weatherStruct.main.pressure) + " hPa"
+                self?.humidity.text = String(weatherStruct.main.humidity) + " %"
+                
             }
         })
         
