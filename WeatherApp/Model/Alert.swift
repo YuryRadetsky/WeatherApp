@@ -9,10 +9,13 @@
 import Foundation
 import UIKit
 
-class Alert {
-    func showAlert (title: String, message: String, viewController: UIViewController) {
+
+struct Alert {
+    static func showAlert(onVC vc: UIViewController, withTitle title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        viewController.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            vc.present(alert, animated: true, completion: nil)
+        }
     }
 }

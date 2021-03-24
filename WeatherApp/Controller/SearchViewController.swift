@@ -16,14 +16,11 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var conditionLabel: UILabel!
-    @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var min: UILabel!
-    @IBOutlet weak var max: UILabel!
-    @IBOutlet weak var pressure: UILabel!
-    @IBOutlet weak var humidity: UILabel!
-    @IBOutlet weak var descriptionWeather: UILabel!
+    @IBOutlet weak var minTemperatureLabel: UILabel!
+    @IBOutlet weak var maxTemperatureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var descriptionWeatherLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var searchBarr: UISearchBar!
@@ -31,8 +28,7 @@ class SearchViewController: UIViewController {
     
     var favoriteCity = UserSettings.shared.favoriteCity
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherModel?
-    let gradient = Gradient()
+    let gradient = GradientBackground()
     let image = Image()
     var delay: Timer?
     
@@ -43,19 +39,17 @@ class SearchViewController: UIViewController {
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
-        conditionLabel.text = "CONDITION"
-        min.text = "-- ℃"
-        max.text = "-- ℃"
-        pressure.text = "-- hPa"
-        humidity.text = "-- %"
-        descriptionWeather.text = "description"
+        minTemperatureLabel.text = "-- ℃"
+        maxTemperatureLabel.text = "-- ℃"
+        humidityLabel.text = "-- %"
+        descriptionWeatherLabel.text = "description"
         view.backgroundColor = .systemGray2
     }
     
     @IBAction func tapSaveButton(_ sender: Any) {
         guard let city = searchBarr.searchTextField.text else {return}
         if city.isEmpty {
-            Alert().showAlert(title: "Alert", message: "Enter the city name", viewController: self)
+            Alert.showAlert(onVC: self, withTitle: "Alert", message: "Enter the city name")
         } else {
             UserSettings.shared.favoriteCity.append("\(city)")
             UserSettings.shared.saveToDefaults()
@@ -81,24 +75,20 @@ extension SearchViewController: UISearchBarDelegate {
         delay = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
             self.networkService.fetchWeatherData(forCity: searchText) { [weak self] (weatherStruct) in
                 guard let weatherStruct = weatherStruct else { return }
-                print(weatherStruct.base.count, weatherStruct)
-                self?.weatherStruct = weatherStruct
                 // UI Updates
                 self?.cityNameLabel.text = weatherStruct.name
                 self?.feelLikeLabel.text = "feels like " + String(Int(weatherStruct.main.feelsLike)) + " ℃"
                 self?.temperatureLabel.text = String(Int(weatherStruct.main.temp))
                 for weather in weatherStruct.weather {
-                    self?.conditionLabel.text = weather.main.localizedUppercase
-                    self?.descriptionWeather.text = weather.weatherDescription
+                    self?.descriptionWeatherLabel.text = weather.weatherDescription
                     // conditionImage
                     self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
                     // Gradient background Updates
-                    self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
+                    self?.gradient.createGradientLayer(weatherId: weather.id, controller: self!)
                 }
-                self?.min.text = String(Int(weatherStruct.main.tempMin)) + " ℃"
-                self?.max.text = String(Int(weatherStruct.main.tempMax)) + " ℃"
-                self?.pressure.text = String(weatherStruct.main.pressure) + " hPa"
-                self?.humidity.text = String(weatherStruct.main.humidity) + " %"
+                self?.minTemperatureLabel.text = String(Int(weatherStruct.main.tempMin))
+                self?.maxTemperatureLabel.text = String(Int(weatherStruct.main.tempMax))
+                self?.humidityLabel.text = String(weatherStruct.main.humidity) + " %"
                 
             }
         })

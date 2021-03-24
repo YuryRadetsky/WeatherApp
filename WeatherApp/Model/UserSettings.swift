@@ -10,7 +10,6 @@ import Foundation
 //swiftlint:disable trailing_whitespace
 
 class UserSettings {
-    
     static let shared = UserSettings()
     
     private init() {}
@@ -23,7 +22,7 @@ class UserSettings {
         get {
             let citiesFromDefaults = UserDefaults.standard.array(forKey: "saveCity") as? [String]
             guard citiesFromDefaults != nil else {return []}
-            return citiesFromDefaults ?? []
+            return citiesFromDefaults?.removeDuplicates() ?? []
         }
     }
     

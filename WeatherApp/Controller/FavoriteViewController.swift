@@ -15,41 +15,30 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var conditionLabel: UILabel!
-    @IBOutlet weak var unitLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var min: UILabel!
-    @IBOutlet weak var max: UILabel!
-    @IBOutlet weak var pressure: UILabel!
-    @IBOutlet weak var humidity: UILabel!
-    @IBOutlet weak var descriptionWeather: UILabel!
+    @IBOutlet weak var currentTemperatureLabel: UILabel!
+    @IBOutlet weak var minTemperatureLabel: UILabel!
+    @IBOutlet weak var maxTemperatureLabel: UILabel!
+    @IBOutlet weak var descriptionWeatherLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
     
-    
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherModel?
-    let gradient = Gradient()
+    let gradient = GradientBackground()
     let image = Image()
     var city = ""
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
-        temperatureLabel.text = "--"
-        conditionLabel.text = "CONDITION"
-        min.text = "-- ℃"
-        max.text = "-- ℃"
-        pressure.text = "-- hPa"
-        humidity.text = "-- %"
-        descriptionWeather.text = "description"
+        currentTemperatureLabel.text = "--"
+        minTemperatureLabel.text = "-- ℃"
+        maxTemperatureLabel.text = "-- ℃"
+        descriptionWeatherLabel.text = "description"
         view.backgroundColor = .systemGray2
         
         fetchFaviriteCity(city: city)
     }
-    
     
     func fetchFaviriteCity (city: String ) {
         networkService.fetchWeatherData(forCity: city) { [weak self] (weaatherStruct) in
@@ -57,20 +46,17 @@ class FavoriteViewController: UIViewController {
             // UI Updates
             self?.cityNameLabel.text = weaatherStruct.name
             self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
-            self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
+            self?.currentTemperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
             
             for weather in weaatherStruct.weather {
-                self?.conditionLabel.text = weather.main.localizedUppercase
-                self?.descriptionWeather.text = weather.weatherDescription
+                self?.descriptionWeatherLabel.text = weather.weatherDescription
                 // Image Updates
                 self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
                 // Gradient background Updates //
-                self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
+                self?.gradient.createGradientLayer(weatherId: weather.id, controller: self!)
             }
-            self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
-            self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
-            self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
-            self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
+            self?.minTemperatureLabel.text = String(Int(weaatherStruct.main.tempMin))
+            self?.maxTemperatureLabel.text = String(Int(weaatherStruct.main.tempMax))
         }
     }
 }

@@ -9,13 +9,13 @@
 import UIKit
 //swiftlint:disable identifier_name
 
-class Gradient {
+class GradientBackground {
 
     // Gradient background Updates
-    func createGradientLayer(weatherId: Int, viewController: UIViewController) {
+    func createGradientLayer(weatherId: Int, controller: UIViewController) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = viewController.view.bounds
-        viewController.view.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.frame = controller.view.bounds
+        controller.view.layer.insertSublayer(gradientLayer, at: 0)
 
         switch weatherId {
         case 200...232:

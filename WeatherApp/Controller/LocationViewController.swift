@@ -18,23 +18,16 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var conditionLabel: UILabel!
-    @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var min: UILabel!
-    @IBOutlet weak var max: UILabel!
-    @IBOutlet weak var pressure: UILabel!
-    @IBOutlet weak var humidity: UILabel!
-    @IBOutlet weak var descriptionWeather: UILabel!
+    @IBOutlet weak var minTemperatureLabel: UILabel!
+    @IBOutlet weak var maxTemperatureLabel: UILabel!
+    @IBOutlet weak var descriptionWeatherLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
-    
     
     let locationManager = CLLocationManager()
     let networkService = DataFetcherService()
-    var weatherStruct: WeatherModel?
-    let gradient = Gradient()
+    let gradient = GradientBackground()
     let image = Image()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,16 +35,12 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
         temperatureLabel.text = "--"
-        conditionLabel.text = "CONDITION"
-        min.text = "--℃"
-        max.text = "--℃"
-        pressure.text = "--hPa"
-        humidity.text = "--%"
-        descriptionWeather.text = "description"
+        minTemperatureLabel.text = "--℃"
+        maxTemperatureLabel.text = "--℃"
+        descriptionWeatherLabel.text = "description"
         view.backgroundColor = .systemGray2
         setupLocationManager()
     }
-    
     
     func setupLocationManager() {
         locationManager.delegate = self
@@ -59,7 +48,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
     
     // MARK: - CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -70,30 +58,26 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             print(latitude, longitude)
             networkService.fetchWeatherData(latitude: latitude, longitude: longitude) { [weak self] (weaatherStruct) in
                 guard let weaatherStruct = weaatherStruct else { return }
-                print(weaatherStruct.base.count)
                 // UI Updates
                 self?.cityNameLabel.text = weaatherStruct.name
                 self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
                 self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
                 for weather in weaatherStruct.weather {
-                    self?.conditionLabel.text = weather.main.localizedUppercase
-                    self?.descriptionWeather.text = weather.weatherDescription
+                    self?.descriptionWeatherLabel.text = weather.weatherDescription
                     print(weather.id)
                     // Image Updates
                     self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
                     // Gradient background Updates
-                    self?.gradient.createGradientLayer(weatherId: weather.id, viewController: self!)
+                    self?.gradient.createGradientLayer(weatherId: weather.id, controller: self!)
                 }
-                self?.min.text = String(Int(weaatherStruct.main.tempMin)) + " ℃"
-                self?.max.text = String(Int(weaatherStruct.main.tempMax)) + " ℃"
-                self?.pressure.text = String(weaatherStruct.main.pressure) + " hPa"
-                self?.humidity.text = String(weaatherStruct.main.humidity) + " %"
+                self?.minTemperatureLabel.text = String(Int(weaatherStruct.main.tempMin))
+                self?.maxTemperatureLabel.text = String(Int(weaatherStruct.main.tempMax))
             }
         }
         locationManager.stopUpdatingLocation()
     }
-}
-
-func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    print("Can't get location", error)
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Can't get location", error)
+    }
 }
