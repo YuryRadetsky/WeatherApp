@@ -68,7 +68,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             print(latitude, longitude)
-            networkService.fetchWeather(latitude: latitude, longitude: longitude) { [weak self] (weaatherStruct) in
+            networkService.fetchWeatherData(latitude: latitude, longitude: longitude) { [weak self] (weaatherStruct) in
                 guard let weaatherStruct = weaatherStruct else { return }
                 print(weaatherStruct.base.count)
                 // UI Updates

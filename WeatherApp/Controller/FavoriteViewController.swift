@@ -52,7 +52,7 @@ class FavoriteViewController: UIViewController {
     
     
     func fetchFaviriteCity (city: String ) {
-        networkService.fetchWeather(forCity: city) { [weak self] (weaatherStruct) in
+        networkService.fetchWeatherData(forCity: city) { [weak self] (weaatherStruct) in
             guard let weaatherStruct = weaatherStruct else { return }
             // UI Updates
             self?.cityNameLabel.text = weaatherStruct.name

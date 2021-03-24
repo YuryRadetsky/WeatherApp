@@ -79,7 +79,7 @@ extension SearchViewController: UISearchBarDelegate {
         
         delay?.invalidate()
         delay = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-            self.networkService.fetchWeather(forCity: searchText) { [weak self] (weatherStruct) in
+            self.networkService.fetchWeatherData(forCity: searchText) { [weak self] (weatherStruct) in
                 guard let weatherStruct = weatherStruct else { return }
                 print(weatherStruct.base.count, weatherStruct)
                 self?.weatherStruct = weatherStruct
