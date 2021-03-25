@@ -28,6 +28,17 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDefaultValues()
+        setupCustomNavigationBar()
+        fetchFaviriteCity(city: city)
+    }
+    
+    
+    @IBAction func refreshRapped(_ sender: UIBarButtonItem) {
+        fetchFaviriteCity(city: city)
+    }
+    
+    func setupDefaultValues() {
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
         conditionImageView.image = UIImage(named: "icon_na")
@@ -36,8 +47,12 @@ class FavoriteViewController: UIViewController {
         maxTemperatureLabel.text = "-- ℃"
         descriptionWeatherLabel.text = "description"
         view.backgroundColor = .systemGray2
-        
-        fetchFaviriteCity(city: city)
+    }
+    
+    func setupCustomNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .white
     }
     
     func fetchFaviriteCity (city: String ) {

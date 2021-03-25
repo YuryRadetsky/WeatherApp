@@ -18,7 +18,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var currentTemperatureLabel: UILabel!
     @IBOutlet weak var minTemperatureLabel: UILabel!
     @IBOutlet weak var maxTemperatureLabel: UILabel!
     @IBOutlet weak var descriptionWeatherLabel: UILabel!
@@ -31,14 +31,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cityNameLabel.text = "City"
-        feelLikeLabel.text = "feels like -- ℃"
-        conditionImageView.image = UIImage(named: "icon_na")
-        temperatureLabel.text = "--"
-        minTemperatureLabel.text = "--℃"
-        maxTemperatureLabel.text = "--℃"
-        descriptionWeatherLabel.text = "description"
-        view.backgroundColor = .systemGray2
+        setupDefaultValues()
         setupLocationManager()
     }
     
@@ -47,6 +40,17 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    func setupDefaultValues() {
+        cityNameLabel.text = "City"
+        feelLikeLabel.text = "feels like -- ℃"
+        conditionImageView.image = UIImage(named: "icon_na")
+        currentTemperatureLabel.text = "--"
+        minTemperatureLabel.text = "-- ℃"
+        maxTemperatureLabel.text = "-- ℃"
+        descriptionWeatherLabel.text = "description"
+        view.backgroundColor = .systemGray2
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -61,7 +65,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
                 // UI Updates
                 self?.cityNameLabel.text = weaatherStruct.name
                 self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
-                self?.temperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
+                self?.currentTemperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
                 for weather in weaatherStruct.weather {
                     self?.descriptionWeatherLabel.text = weather.weatherDescription
                     print(weather.id)

@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var currentTemperatureLabel: UILabel!
     @IBOutlet weak var minTemperatureLabel: UILabel!
     @IBOutlet weak var maxTemperatureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
@@ -35,15 +35,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cityNameLabel.text = "City"
-        feelLikeLabel.text = "feels like -- ℃"
-        conditionImageView.image = UIImage(named: "icon_na")
-        temperatureLabel.text = "--"
-        minTemperatureLabel.text = "-- ℃"
-        maxTemperatureLabel.text = "-- ℃"
-        humidityLabel.text = "-- %"
-        descriptionWeatherLabel.text = "description"
-        view.backgroundColor = .systemGray2
+        setupDefaultValues()
     }
     
     @IBAction func tapSaveButton(_ sender: Any) {
@@ -56,6 +48,17 @@ class SearchViewController: UIViewController {
             searchBarr.text = nil
             print(UserSettings.shared.favoriteCity)
         }
+    }
+    
+    func setupDefaultValues() {
+        cityNameLabel.text = "City"
+        feelLikeLabel.text = "feels like -- ℃"
+        conditionImageView.image = UIImage(named: "icon_na")
+        currentTemperatureLabel.text = "--"
+        minTemperatureLabel.text = "-- ℃"
+        maxTemperatureLabel.text = "-- ℃"
+        descriptionWeatherLabel.text = "description"
+        view.backgroundColor = .systemGray2
     }
     
     // Hide the keyboard
@@ -78,7 +81,7 @@ extension SearchViewController: UISearchBarDelegate {
                 // UI Updates
                 self?.cityNameLabel.text = weatherStruct.name
                 self?.feelLikeLabel.text = "feels like " + String(Int(weatherStruct.main.feelsLike)) + " ℃"
-                self?.temperatureLabel.text = String(Int(weatherStruct.main.temp))
+                self?.currentTemperatureLabel.text = String(Int(weatherStruct.main.temp))
                 for weather in weatherStruct.weather {
                     self?.descriptionWeatherLabel.text = weather.weatherDescription
                     // conditionImage
