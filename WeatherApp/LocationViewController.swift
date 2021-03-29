@@ -8,8 +8,7 @@
 
 import UIKit
 import CoreLocation
-//swiftlint:disable vertical_whitespace
-//swiftlint:disable trailing_whitespace
+//swiftlint:disable all
 
 class LocationViewController: UIViewController {
     

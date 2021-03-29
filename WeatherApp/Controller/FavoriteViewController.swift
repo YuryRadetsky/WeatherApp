@@ -7,11 +7,12 @@
 //
 
 import UIKit
-//swiftlint:disable trailing_whitespace
-//swiftlint:disable vertical_whitespace
+//swiftlint:disable all
+
 class FavoriteViewController: UIViewController {
     
-    // MARK: - IBOutlet
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var feelLikeLabel: UILabel!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -21,57 +22,66 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var descriptionWeatherLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
     
+    // MARK: - Properties
+    
     let networkService = DataFetcherService()
-    let gradient = GradientBackground()
+    let gradientBackground = GradientBackground()
     let image = Image()
-    var city = ""
+    
+    var cityName = ""
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDefaultValues()
         setupCustomNavigationBar()
-        fetchFaviriteCity(city: city)
+        
+        fetchFaviriteCity(city: cityName)
     }
     
+    // MARK: - Private Methods
     
-    @IBAction func refreshRapped(_ sender: UIBarButtonItem) {
-        fetchFaviriteCity(city: city)
-    }
-    
-    func setupDefaultValues() {
+    private func setupDefaultValues() {
         cityNameLabel.text = "City"
         feelLikeLabel.text = "feels like -- ℃"
-        conditionImageView.image = UIImage(named: "icon_na")
         currentTemperatureLabel.text = "--"
         minTemperatureLabel.text = "-- ℃"
         maxTemperatureLabel.text = "-- ℃"
         descriptionWeatherLabel.text = "description"
+        
+        conditionImageView.image = UIImage(named: "icon_na")
+        
         view.backgroundColor = .systemGray2
     }
     
-    func setupCustomNavigationBar() {
+    private func setupCustomNavigationBar() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .white
     }
     
-    func fetchFaviriteCity (city: String ) {
-        networkService.fetchWeatherData(forCity: city) { [weak self] (weaatherStruct) in
-            guard let weaatherStruct = weaatherStruct else { return }
-            // UI Updates
-            self?.cityNameLabel.text = weaatherStruct.name
-            self?.feelLikeLabel.text = "feels like " + String(Int(weaatherStruct.main.feelsLike)) + " ℃"
-            self?.currentTemperatureLabel.text = "\(Int(weaatherStruct.main.temp))"
+    private func fetchFaviriteCity (city: String ) {
+        networkService.fetchWeatherData(forCity: city) { [weak self] (weather) in
+            guard let weather = weather else { return }
             
-            for weather in weaatherStruct.weather {
+            self?.cityNameLabel.text = weather.name
+            self?.feelLikeLabel.text = "feels like \(String(Int(weather.main.feelsLike))) ℃"
+            self?.minTemperatureLabel.text = "\(Int(weather.main.tempMin))"
+            self?.maxTemperatureLabel.text = "\(Int(weather.main.tempMax))"
+           
+            self?.currentTemperatureLabel.text = "\(Int(weather.main.temp))"
+            for weather in weather.weather {
                 self?.descriptionWeatherLabel.text = weather.weatherDescription
-                // Image Updates
                 self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
-                // Gradient background Updates //
-                self?.gradient.createGradientLayer(weatherId: weather.id, controller: self!)
+                self?.gradientBackground.createGradientLayer(weatherId: weather.id, controller: self!)
             }
-            self?.minTemperatureLabel.text = String(Int(weaatherStruct.main.tempMin))
-            self?.maxTemperatureLabel.text = String(Int(weaatherStruct.main.tempMax))
         }
     }
+    
+    // MARK: - IBActions
+    @IBAction func refreshRapped(_ sender: UIBarButtonItem) {
+        fetchFaviriteCity(city: cityName)
+    }
+    
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//swiftlint:disable identifier_name
+//swiftlint:disable all
 
 class GradientBackground {
 

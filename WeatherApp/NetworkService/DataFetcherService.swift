@@ -8,16 +8,22 @@
 
 import Foundation
 import CoreLocation
-//swiftlint:disable trailing_whitespace
-//swiftlint:disable line_length
+//swiftlint:disable all
 
 class DataFetcherService {
+    
+    // MARK: - IBOutlets
+    
     let locationManager = CLLocationManager()
     var networkDataFetcher: DataFetcher
     
+    // MARK: - Initializers
+
     init (networkDataFetcher: DataFetcher = NetworkDataFetcher()) {
         self.networkDataFetcher = networkDataFetcher
     }
+    
+    // MARK: - Public Methods
     
     func fetchWeatherData (forCity city: String, completion: @escaping (WeatherModel?) -> Void) {
         let city = city.split(separator: " ").joined(separator: "%20")

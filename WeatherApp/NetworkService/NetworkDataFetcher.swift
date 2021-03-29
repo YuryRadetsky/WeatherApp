@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//swiftlint:disable all
 
 protocol DataFetcher {
     func fetchGenericData<T: Codable> (urlString: String, completion: @escaping (T?) -> Void)

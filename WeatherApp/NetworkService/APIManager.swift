@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+//swiftlint:disable all
 
 class APIManager {
     static let shared = APIManager()
