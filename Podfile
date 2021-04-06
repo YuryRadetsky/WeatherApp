@@ -7,5 +7,6 @@ target 'WeatherApp' do
 
   # Pods for WeatherApp
 pod 'SwiftLint'
+pod 'SDWebImage', '~> 5.0'
 
 end

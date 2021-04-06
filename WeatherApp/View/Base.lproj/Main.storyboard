@@ -200,11 +200,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="My List" id="Ng0-Wm-OsD">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="xuH-kL-kt3">
+                            <color key="tintColor" red="1" green="0.0" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="editTapped:" destination="igT-YN-16Z" id="9eJ-Ct-cVs"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GEd-Fj-DrB">
+                            <color key="tintColor" red="1" green="0.0" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="saveTapped:" destination="igT-YN-16Z" id="Gdf-7V-rHh"/>
                             </connections>
@@ -229,6 +231,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" red="1" green="0.0" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" destinationCreationSelector="LocationVC" id="rjs-Vy-3Nq"/>
@@ -402,6 +405,7 @@
                     <tabBarItem key="tabBarItem" title="Location" image="location.fill" catalog="system" id="hT7-dM-Dpz" userLabel="Location"/>
                     <navigationItem key="navigationItem" id="Y4i-bQ-8bA">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Nju-2X-7WX">
+                            <color key="tintColor" red="1" green="0.0" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="refreshRapped:" destination="bzr-Od-JH0" id="SeT-C4-Zyy"/>
                             </connections>

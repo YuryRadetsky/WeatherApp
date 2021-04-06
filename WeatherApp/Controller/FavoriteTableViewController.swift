@@ -54,6 +54,7 @@ class FavoriteTableViewController: UIViewController {
         table.delegate = self
         table.dataSource = self
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.tableFooterView = UIView()
     }
     
     private func saveNewCity(withTitle title: String) {
@@ -95,7 +96,8 @@ class FavoriteTableViewController: UIViewController {
     
 }
 
-// MARK: - Table View Data Source
+// MARK: - UITableViewDataSource
+
 extension FavoriteTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,11 +144,25 @@ extension FavoriteTableViewController: UITableViewDataSource {
     
 }
 
+// MARK: - UITableViewDelegate
+
 extension FavoriteTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let city = cities[indexPath.row] as? City else { return }
         performSegue(withIdentifier: "FavoriteCityVC", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "Your favorite list is empty."
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        return label
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return cities.count > 0 ? 0 : view.bounds.height / 1.5
     }
     
 }

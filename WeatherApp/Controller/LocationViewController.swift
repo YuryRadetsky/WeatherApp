@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+//import SDWebImage
 //swiftlint:disable all
 
 class LocationViewController: UIViewController {
@@ -48,16 +49,16 @@ class LocationViewController: UIViewController {
     }
     
     private func setupDefaultValues() {
-        cityNameLabel.text = "City"
-        feelLikeLabel.text = "feels like -- ℃"
-        currentTemperatureLabel.text = "--"
-        minTemperatureLabel.text = "-- ℃"
-        maxTemperatureLabel.text = "-- ℃"
-        descriptionWeatherLabel.text = "description"
-        
-        conditionImageView.image = UIImage(named: "icon_na")
-        
-        view.backgroundColor = .systemGray2
+//        cityNameLabel.text = "City"
+//        feelLikeLabel.text = "feels like -- ℃"
+//        currentTemperatureLabel.text = "--"
+//        minTemperatureLabel.text = "-- ℃"
+//        maxTemperatureLabel.text = "-- ℃"
+//        descriptionWeatherLabel.text = "description"
+//        
+//        conditionImageView.image = UIImage(named: "icon_na")
+//        
+//        view.backgroundColor = .systemGray2
     }
     
 }

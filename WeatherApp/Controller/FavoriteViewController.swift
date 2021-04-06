@@ -58,7 +58,7 @@ class FavoriteViewController: UIViewController {
     private func setupCustomNavigationBar() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
     }
     
     private func fetchFaviriteCity (city: String ) {
