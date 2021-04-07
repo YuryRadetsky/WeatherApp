@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//swiftlint:disable all
 
 struct OpenWeatherAPI {
     

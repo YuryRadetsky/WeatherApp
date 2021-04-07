@@ -24,6 +24,8 @@ class LocationViewController: UIViewController {
     @IBOutlet weak var descriptionWeatherLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
     
+    @IBOutlet weak var loader: UIActivityIndicatorView!
+    
     // MARK: - Properties
     
     let locationManager = CLLocationManager()
@@ -37,6 +39,7 @@ class LocationViewController: UIViewController {
         super.viewDidLoad()
         setupDefaultValues()
         setupLocationManager()
+        showLoader()
     }
     
     // MARK: - Private Methods
@@ -49,16 +52,26 @@ class LocationViewController: UIViewController {
     }
     
     private func setupDefaultValues() {
-//        cityNameLabel.text = "City"
-//        feelLikeLabel.text = "feels like -- ℃"
-//        currentTemperatureLabel.text = "--"
-//        minTemperatureLabel.text = "-- ℃"
-//        maxTemperatureLabel.text = "-- ℃"
-//        descriptionWeatherLabel.text = "description"
-//        
-//        conditionImageView.image = UIImage(named: "icon_na")
-//        
-//        view.backgroundColor = .systemGray2
+        cityNameLabel.text = nil
+        feelLikeLabel.text = nil
+        currentTemperatureLabel.text = nil
+        minTemperatureLabel.text = nil
+        maxTemperatureLabel.text = nil
+        descriptionWeatherLabel.text = nil
+        
+        conditionImageView.image = nil
+        view.backgroundColor = .systemGray
+    }
+    
+    private func showLoader() {
+        loader.startAnimating()
+        loader.hidesWhenStopped = true
+        loader.style = .large
+        loader.color = .white
+    }
+    
+    private func hideLoader() {
+        loader.stopAnimating()
     }
     
 }
@@ -78,7 +91,7 @@ extension LocationViewController: CLLocationManagerDelegate {
             self?.feelLikeLabel.text = "feels like \(String(Int(weather.main.feelsLike))) ℃"
             self?.minTemperatureLabel.text = "\(Int(weather.main.tempMin))"
             self?.maxTemperatureLabel.text = "\(Int(weather.main.tempMax))"
-           
+            
             self?.currentTemperatureLabel.text = "\(Int(weather.main.temp))"
             for weather in weather.weather {
                 self?.descriptionWeatherLabel.text = weather.weatherDescription
@@ -87,6 +100,7 @@ extension LocationViewController: CLLocationManagerDelegate {
             }
         }
         locationManager.stopUpdatingLocation()
+        hideLoader()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

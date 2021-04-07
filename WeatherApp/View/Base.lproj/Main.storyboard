@@ -135,6 +135,9 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="-2"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Ji6-8U-1jX">
+                                <rect key="frame" x="197" y="418.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.40534752610000002" green="0.32746022940000002" blue="0.89416438340000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -146,7 +149,9 @@
                             <constraint firstItem="fXi-ai-oBR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="RhF-D9-155"/>
                             <constraint firstItem="Ttq-ZH-bht" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="SU4-Tk-fwT"/>
                             <constraint firstItem="fXi-ai-oBR" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Tu6-K1-8i5"/>
+                            <constraint firstItem="Ji6-8U-1jX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="kLv-lS-9be"/>
                             <constraint firstItem="G9X-am-fiE" firstAttribute="trailing" secondItem="Ttq-ZH-bht" secondAttribute="trailing" id="oEj-Hv-4tB"/>
+                            <constraint firstItem="Ji6-8U-1jX" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="uU3-m3-o67"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Location" image="location.fill" catalog="system" id="2dL-KJ-r8F" userLabel="Location"/>
@@ -158,6 +163,7 @@
                         <outlet property="currentTemperatureLabel" destination="Wsy-bs-brC" id="cOR-f0-CTo"/>
                         <outlet property="descriptionWeatherLabel" destination="G9X-am-fiE" id="MFo-X2-MKY"/>
                         <outlet property="feelLikeLabel" destination="xRr-gX-yGh" id="48d-kF-zSo"/>
+                        <outlet property="loader" destination="Ji6-8U-1jX" id="HGD-bn-7fb"/>
                         <outlet property="maxTemperatureLabel" destination="Oh6-z2-qRf" id="knQ-QN-Emc"/>
                         <outlet property="minTemperatureLabel" destination="WTZ-AA-uan" id="oFu-Ql-gy4"/>
                     </connections>
