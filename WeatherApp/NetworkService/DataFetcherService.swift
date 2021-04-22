@@ -33,6 +33,7 @@ class DataFetcherService {
     
     func fetchWeatherData (latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping (WeatherModel?) -> Void) {
         let urlString = APIManager.shared.getLocationURL(latitude: latitude, longitude: longitude)
+        print(urlString)
         networkDataFetcher.fetchGenericData(urlString: urlString, completion: completion)
     }
     

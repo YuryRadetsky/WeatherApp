@@ -11,27 +11,26 @@ import CoreLocation
 //import SDWebImage
 //swiftlint:disable all
 
-class LocationViewController: UIViewController {
+final class LocationViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var feelLikeLabel: UILabel!
-    @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var currentTemperatureLabel: UILabel!
-    @IBOutlet weak var minTemperatureLabel: UILabel!
-    @IBOutlet weak var maxTemperatureLabel: UILabel!
-    @IBOutlet weak var descriptionWeatherLabel: UILabel!
-    @IBOutlet var backgroundView: UIView!
-    
-    @IBOutlet weak var loader: UIActivityIndicatorView!
+    @IBOutlet private weak var cityNameLabel: UILabel!
+    @IBOutlet private weak var feelLikeLabel: UILabel!
+    @IBOutlet private weak var conditionImageView: UIImageView!
+    @IBOutlet private weak var currentTemperatureLabel: UILabel!
+    @IBOutlet private weak var minTemperatureLabel: UILabel!
+    @IBOutlet private weak var maxTemperatureLabel: UILabel!
+    @IBOutlet private weak var descriptionWeatherLabel: UILabel!
+    @IBOutlet private var backgroundView: UIView!
+    @IBOutlet private weak var loader: UIActivityIndicatorView!
     
     // MARK: - Properties
     
-    let locationManager = CLLocationManager()
-    let networkService = DataFetcherService()
-    let gradientBackground = GradientBackground()
-    let image = Image()
+    private let locationManager = CLLocationManager()
+    private let networkService = DataFetcherService()
+    private let gradientBackground = GradientBackground()
+    private let image = Image()
     
     // MARK: - Lifecycle
     
@@ -40,9 +39,15 @@ class LocationViewController: UIViewController {
         setupDefaultValues()
         setupLocationManager()
         showLoader()
+        enlargeConditionImageView()
+        
     }
     
-    // MARK: - Private Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    // MARK: - Setups
     
     private func setupLocationManager() {
         locationManager.delegate = self
@@ -58,10 +63,11 @@ class LocationViewController: UIViewController {
         minTemperatureLabel.text = nil
         maxTemperatureLabel.text = nil
         descriptionWeatherLabel.text = nil
-        
         conditionImageView.image = nil
         view.backgroundColor = .systemGray
     }
+    
+    // MARK: - Loader
     
     private func showLoader() {
         loader.startAnimating()
@@ -72,6 +78,24 @@ class LocationViewController: UIViewController {
     
     private func hideLoader() {
         loader.stopAnimating()
+    }
+    
+    // MARK: - Animations
+    
+    private func enlargeConditionImageView() {
+        UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            let scale: CGFloat = 2
+            self.conditionImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }, completion: { _ in
+            self.reduceConditionImageView()
+        })
+    }
+    
+    private func reduceConditionImageView() {
+        UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            let scale: CGFloat = 1
+            self.conditionImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }, completion: nil)
     }
     
 }
@@ -85,19 +109,16 @@ extension LocationViewController: CLLocationManagerDelegate {
         let longitude = location.coordinate.longitude
         
         networkService.fetchWeatherData(latitude: latitude, longitude: longitude) { [weak self] (weather) in
-            guard let weather = weather else { return }
-            
-            self?.cityNameLabel.text = weather.name
-            self?.feelLikeLabel.text = "feels like \(String(Int(weather.main.feelsLike))) ℃"
-            self?.minTemperatureLabel.text = "\(Int(weather.main.tempMin))"
-            self?.maxTemperatureLabel.text = "\(Int(weather.main.tempMax))"
-            
-            self?.currentTemperatureLabel.text = "\(Int(weather.main.temp))"
-            for weather in weather.weather {
-                self?.descriptionWeatherLabel.text = weather.weatherDescription
-                self?.image.weatherCondition(iconId: weather.icon, imageView: self!.conditionImageView)
-                self?.gradientBackground.createGradientLayer(weatherId: weather.id, controller: self!)
-            }
+            guard let self = self,
+                  let weather = weather else { return }
+            self.cityNameLabel.text = weather.name
+            self.feelLikeLabel.text = "Feels like " + String(format: "%.f", weather.main.feelsLike) + " ℃"
+            self.minTemperatureLabel.text = String(format: "%.f", weather.main.tempMin)
+            self.maxTemperatureLabel.text = String(format: "%.f", weather.main.tempMax)
+            self.currentTemperatureLabel.text = String(format: "%.f", weather.main.temp)
+            self.descriptionWeatherLabel.text = weather.weather[0].weatherDescription.localizedCapitalized
+            self.image.weatherCondition(iconId: weather.weather[0].icon, imageView: self.conditionImageView)
+            self.gradientBackground.createGradientLayer(weatherId: weather.weather[0].id, controller: self)
         }
         locationManager.stopUpdatingLocation()
         hideLoader()

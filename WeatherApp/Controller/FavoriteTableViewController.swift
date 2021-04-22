@@ -10,16 +10,18 @@ import UIKit
 import CoreData
 //swiftlint:disable all
 
-class FavoriteTableViewController: UIViewController {
+final class FavoriteTableViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet var table: UITableView!
+    @IBOutlet private var table: UITableView!
     
     // MARK: - Properties
     
-    var cities: [City] = []
-    let context = (UIApplication.shared.delegate as! AppDelegate).coreDataStack.persistentContainer.viewContext
+    private var cities: [City] = []
+    private var segueIdentifier = "FavoriteCityVC"
+    private var cellIdentifier = "Cell"
+    private let context = (UIApplication.shared.delegate as! AppDelegate).coreDataStack.persistentContainer.viewContext
     
     // MARK: - Lifecycle
     
@@ -53,7 +55,7 @@ class FavoriteTableViewController: UIViewController {
     private func setupTableView() {
         table.delegate = self
         table.dataSource = self
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         table.tableFooterView = UIView()
     }
     
@@ -74,7 +76,7 @@ class FavoriteTableViewController: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+    @IBAction private func saveTapped(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "New city", message: "Please add new city", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Save", style: .default) {  (_) in
             let textField = alertController.textFields?.first
@@ -90,7 +92,7 @@ class FavoriteTableViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func editTapped(_ sender: Any) {
+    @IBAction private func editTapped(_ sender: Any) {
         table.isEditing = !table.isEditing
     }
     
@@ -105,7 +107,7 @@ extension FavoriteTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = table.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         let city = cities[indexPath.row]
         cell.textLabel?.text = city.title
         return cell
@@ -129,12 +131,11 @@ extension FavoriteTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        guard let city = cities[indexPath.row] as? City, editingStyle == .delete else { return }
-        
+        guard let city = cities[indexPath.row] as? City,
+              editingStyle == .delete else { return }
         context.delete(city)
         cities.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        
         do {
             try context.save()
         } catch let error as NSError {
@@ -150,7 +151,7 @@ extension FavoriteTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let city = cities[indexPath.row] as? City else { return }
-        performSegue(withIdentifier: "FavoriteCityVC", sender: nil)
+        performSegue(withIdentifier: segueIdentifier, sender: nil)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -14,41 +14,41 @@ class Image {
     func weatherCondition(iconId: String, imageView: UIImageView) {
         switch iconId {
         case "01d":
-            imageView.image = UIImage(systemName: "circle.fill")
+            imageView.image = UIImage(systemName: "circle")
         case "02d":
-            imageView.image = UIImage(systemName: "cloud.sun.fill")
+            imageView.image = UIImage(systemName: "cloud.sun")
         case "03d":
-            imageView.image = UIImage(systemName: "cloud.fill")
+            imageView.image = UIImage(systemName: "cloud")
         case "04d":
-            imageView.image = UIImage(systemName: "smoke.fill")
+            imageView.image = UIImage(systemName: "smoke")
         case "09d":
-            imageView.image = UIImage(systemName: "cloud.drizzle.fill")
+            imageView.image = UIImage(systemName: "cloud.drizzle")
         case "10d":
-            imageView.image = UIImage(systemName: "cloud.sun.rain.fill")
+            imageView.image = UIImage(systemName: "cloud.sun.rain")
         case "11d":
-            imageView.image = UIImage(systemName: "cloud.bolt.fill")
+            imageView.image = UIImage(systemName: "cloud.bolt")
         case "13d":
             imageView.image = UIImage(systemName: "snow")
         case "50d":
-            imageView.image = UIImage(systemName: "cloud.fog.fill")
+            imageView.image = UIImage(systemName: "cloud.fog")
         case "01n":
-            imageView.image = UIImage(systemName: "moon.stars.fill")
+            imageView.image = UIImage(systemName: "moon.stars")
         case "02n":
-            imageView.image = UIImage(systemName: "cloud.moon.fill")
+            imageView.image = UIImage(systemName: "cloud.moon")
         case "03n":
-            imageView.image = UIImage(systemName: "cloud.fill")
+            imageView.image = UIImage(systemName: "cloud")
         case "04n":
-            imageView.image = UIImage(systemName: "smoke.fill")
+            imageView.image = UIImage(systemName: "smoke")
         case "09n":
-            imageView.image = UIImage(systemName: "cloud.drizzle.fill")
+            imageView.image = UIImage(systemName: "cloud.drizzle")
         case "10n":
-            imageView.image = UIImage(systemName: "cloud.moon.rain.fill")
+            imageView.image = UIImage(systemName: "cloud.moon.rain")
         case "11n":
-            imageView.image = UIImage(systemName: "cloud.bolt.fill")
+            imageView.image = UIImage(systemName: "cloud.bolt")
         case "13n":
             imageView.image = UIImage(systemName: "snow")
         case "50n":
-            imageView.image = UIImage(systemName: "cloud.fog.fill")
+            imageView.image = UIImage(systemName: "cloud.fog")
         default:
             print("error")
             imageView.image = UIImage(systemName: "aqi.high")
